@@ -1,0 +1,16 @@
+1/4
+Olika metoder för att attackera diskuterades: 
+- Vinkla telefonen för att hamna i ett "grönt" område som visades på skärmen. 
+- Endast svinga telefonen och bestämma hur kraftfull attacken var genom att mäta hur snabbt man svingar. 
+- Använda gyroskopet för att vinkla telefonen rätt och få feedback via vibration i stället för att använda skala på skärm. 
+
+
+8/4
+Gruppmöte där följande saker fastslogs: 
+- Vid start av app ska det finnas 3 val, "Start game", "Instructions" och "Highscores". 
+- Vid strid visas HP och XP för både spelare och monster. 
+- För att attackera vinklar spelaren telefonen (gyroskop) och hittar en punkt där den vibrerar och trycker samtidigt på skärmen. Därefter svingas telefonen (accelerometer) för att utföra attacken. Skadan bestäms av XP och hur bra man siktar. 
+- För att fly från en strid skriker man "Flee" i telefonens mikrofon. 
+- Vid vinst i en strid går man tillbaka till samma position på kartan och vid förlust kommer man till highscore skärmen där man får skriva in sitt namn och se var på listan man hamnar. 
+
+Vi började även programmera på map-aktiviteten. 
