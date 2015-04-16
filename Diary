@@ -24,3 +24,9 @@ Gruppmöte där följande saker diskuterades:
 - Geografisk plats för butik som ska synas på kartan. 
 - Ljud för att indikera vems tur det är samt när man hamnar i stridläge. 
 - För att fly har vi 2 alternativ. Antingen säger ”flee” i mikrofonen eller använder stegräknaren för att fly från en strid. 
+
+
+16/4
+Hanna lade till ett test för att kunna sikta med hjälp av accelerometern. Det fungerade bra när MainActivity extendar Activity 
+(testade i annat projekt) men blir blank skärm när MainActivity extendar ActionBarActivity. 
+Dock fungerar själva siktet trots att det är blank skärm vilket ses i utskrift i konsolen. De andra gruppmedlemmarna ska kika på det.
