@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="se.killergameab.phonster" >
+    package="se.killergameab.phonster">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -45,6 +45,12 @@
         <activity
             android:name=".HighscoresActivity"
             android:label="@string/title_activity_highscores" >
+        </activity>
+        <activity
+            android:name=".AimingActivity"
+            android:label="AimingActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation">
         </activity>
     </application>
 

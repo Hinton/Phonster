@@ -53,4 +53,9 @@ public class MainActivity extends ActionBarActivity {
         Intent i = new Intent(getApplicationContext(), HighscoresActivity.class);
         startActivity(i);
     }
+
+    public void onAimingClick(View view) {
+        Intent i = new Intent(getApplicationContext(), AimingActivity.class);
+        startActivity(i);
+    }
 }

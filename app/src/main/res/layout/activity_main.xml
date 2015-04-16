@@ -32,4 +32,13 @@
         android:layout_below="@+id/instructionsButton"
         android:layout_centerHorizontal="true"
         android:onClick="onHighscoresClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aiming"
+        android:id="@+id/aimingButton"
+        android:layout_below="@+id/highscoresButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onAimingClick"/>
 </RelativeLayout>
