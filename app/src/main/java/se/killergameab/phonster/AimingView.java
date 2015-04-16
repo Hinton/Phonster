@@ -16,7 +16,7 @@ public class AimingView extends View {
     public AimingView(Context context, float x, float y, int r) {
         super(context);
         //color hex is [transparency][red][green][blue]
-        mPaint.setColor(0xFF00FF00);  //not transparent. color is green
+        mPaint.setColor(0xFFFF0000);  //not transparent. color is red
         this.mX = x;
         this.mY = y;
         this.mR = r;  //radius
