@@ -30,3 +30,5 @@ Gruppmöte där följande saker diskuterades:
 Hanna lade till ett test för att kunna sikta med hjälp av accelerometern. Det fungerade bra när MainActivity extendar Activity 
 (testade i annat projekt) men blir blank skärm när MainActivity extendar ActionBarActivity. 
 Dock fungerar själva siktet trots att det är blank skärm vilket ses i utskrift i konsolen. De andra gruppmedlemmarna ska kika på det.
+
+Oscar testade att visa polygons på kartan.
