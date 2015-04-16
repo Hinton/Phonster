@@ -1,12 +1,15 @@
 package se.killergameab.phonster;
 
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -60,6 +63,25 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.71445, 13.212652), 17));
+        setUpZones();
+    }
+
+    // Use http://www.birdtheme.org/useful/v3tool.html to get coordinates
+    private void setUpZones() {
+        PolygonOptions rectOptions = new PolygonOptions()
+                .add(new LatLng(55.714307, 13.210))
+                .add(new LatLng(55.714307, 13.216))  // North of the previous point, but at the same longitude
+                .add(new LatLng(55.713266, 13.216))  // Same latitude, and 30km to the west
+                .add(new LatLng(55.713266, 13.210))  // Same longitude, and 16km to the south
+                .add(new LatLng(55.714307, 13.210)); // Closes the polyline.
+
+        rectOptions.strokeWidth(0.5f);
+        rectOptions.fillColor(Color.argb(100, 255, 0, 0));
+
+
+        Polygon polyline = mMap.addPolygon(rectOptions);
+
     }
 }
