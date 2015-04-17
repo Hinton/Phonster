@@ -3,11 +3,13 @@ package se.killergameab.phonster;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.hardware.Sensor;
@@ -16,6 +18,7 @@ import android.hardware.SensorManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.SensorEventListener;
+import android.widget.RelativeLayout;
 
 
 public class AimingActivity extends Activity {
@@ -93,6 +96,18 @@ public class AimingActivity extends Activity {
                 //timer event will redraw aim
                 return true;
             }});
+
+        // Proceed to attack when user clicks the screen
+        View screenView = findViewById(R.id.touchListener);
+        screenView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), AttackActivity.class);
+                startActivity(i);
+            }
+
+        });
     }
 
     //For state flow see http://developer.android.com/reference/android/app/Activity.html

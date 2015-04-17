@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
+// http://code.tutsplus.com/tutorials/using-the-accelerometer-on-android--mobile-22125
 public class AttackActivity extends ActionBarActivity implements SensorEventListener {
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;

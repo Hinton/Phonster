@@ -15,4 +15,10 @@
         android:src="@drawable/dartimage"
         android:layout_gravity="center"/>
 
+    <!-- Invisible view used in the onClickListener -->
+    <View
+        android:id="@+id/touchListener"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+
 </FrameLayout>
