@@ -34,3 +34,4 @@ Oscar testade att visa polygons på kartan.
 
 17/4
 Aleks lade till kod för användning av accelerometern vid attack samt koppling mellan sikte och attack. 
+Oscar refaktoriserade kartkoden till Map/Zone klasser. La till ens position på kartan och marker för butiken.
