@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.List;
@@ -19,7 +20,13 @@ public class GoogleMapPresenter {
     public void setup(GoogleMap googleMap) {
 
         setupZones(googleMap, map.getZones());
+        setupShop(googleMap, map.getShopLocation());
 
+    }
+
+    private void setupShop(GoogleMap googleMap, LatLng shopLocation) {
+        googleMap.addMarker(new MarkerOptions()
+            .position(shopLocation));
     }
 
     private void setupZones(GoogleMap googleMap, List<Zone> zones) {

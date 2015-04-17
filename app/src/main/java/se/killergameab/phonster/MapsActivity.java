@@ -65,9 +65,11 @@ public class MapsActivity extends FragmentActivity {
      */
     private void setUpMap() {
         gMap.getUiSettings().setScrollGesturesEnabled(false);
-        //gMap.getUiSettings().setMyLocationButtonEnabled(true);
+        gMap.getUiSettings().setZoomControlsEnabled(false);
+        gMap.getUiSettings().setMyLocationButtonEnabled(false);
+        gMap.getUiSettings().setMapToolbarEnabled(false);
 
-        //gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.71445, 13.212652), 17));
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.71445, 13.212652), 17));
         gMap.setMyLocationEnabled(true);
 
         setUpZones();
