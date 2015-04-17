@@ -18,7 +18,6 @@ import android.hardware.SensorManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.SensorEventListener;
-import android.widget.RelativeLayout;
 
 
 public class AimingActivity extends Activity {
@@ -86,16 +85,6 @@ public class AimingActivity extends Activity {
                         .getSensorList(Sensor.TYPE_ACCELEROMETER).get(0),
                 SensorManager.SENSOR_DELAY_NORMAL);
 
-
-        //listener for touch event
-        mainAimView.setOnTouchListener(new android.view.View.OnTouchListener() {
-            public boolean onTouch(android.view.View v, android.view.MotionEvent e) {
-                //set aim position based on screen touch
-                mAimPos.x = e.getX();
-                mAimPos.y = e.getY();
-                //timer event will redraw aim
-                return true;
-            }});
 
         // Proceed to attack when user clicks the screen
         View screenView = findViewById(R.id.touchListener);
@@ -168,8 +157,6 @@ public class AimingActivity extends Activity {
         super.onDestroy();
         //wait for threads to exit before clearing app
         System.runFinalizersOnExit(true);
-        //remove app from memory
-        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     //listener for config change.
