@@ -1,6 +1,5 @@
 package se.killergameab.phonster;
 
-import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -8,12 +7,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
+
+import se.killergameab.phonster.map.GoogleMapPresenter;
+import se.killergameab.phonster.map.Map;
 
 public class MapsActivity extends FragmentActivity {
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private GoogleMap gMap; // Might be null if Google Play services APK is not available.
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class MapsActivity extends FragmentActivity {
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
      * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
+     * call {@link #setUpMap()} once when {@link #gMap} is not null.
      * <p/>
      * If it isn't installed {@link SupportMapFragment} (and
      * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
@@ -45,12 +46,12 @@ public class MapsActivity extends FragmentActivity {
      */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
+        if (gMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+            gMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
-            if (mMap != null) {
+            if (gMap != null) {
                 setUpMap();
             }
         }
@@ -60,16 +61,31 @@ public class MapsActivity extends FragmentActivity {
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.
      * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
+     * This should only be called once and when we are sure that {@link #gMap} is not null.
      */
     private void setUpMap() {
-        mMap.getUiSettings().setScrollGesturesEnabled(false);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.71445, 13.212652), 17));
+        gMap.getUiSettings().setScrollGesturesEnabled(false);
+        //gMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        //gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.71445, 13.212652), 17));
+        gMap.setMyLocationEnabled(true);
+
         setUpZones();
     }
 
     // Use http://www.birdtheme.org/useful/v3tool.html to get coordinates
     private void setUpZones() {
+
+        Map map = Map.createDemoMap();
+
+        GoogleMapPresenter googleMapPresenter = new GoogleMapPresenter(map);
+        googleMapPresenter.setup(gMap);
+
+        /*
+
+        Map map = Map.createDemoMap();
+
+
         PolygonOptions rectOptions = new PolygonOptions()
                 .add(new LatLng(55.714307, 13.210))
                 .add(new LatLng(55.714307, 13.216))  // North of the previous point, but at the same longitude
@@ -81,7 +97,8 @@ public class MapsActivity extends FragmentActivity {
         rectOptions.fillColor(Color.argb(100, 255, 0, 0));
 
 
-        Polygon polyline = mMap.addPolygon(rectOptions);
+        Polygon polyline = gMap.addPolygon(rectOptions);
+        */
 
     }
 }
