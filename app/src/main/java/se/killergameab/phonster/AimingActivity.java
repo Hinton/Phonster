@@ -93,6 +93,10 @@ public class AimingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AttackActivity.class);
+                // Create bundle to pass accuracy integer to AttackActivity
+                Bundle sendAccuracy = new Bundle();
+                sendAccuracy.putInt("accuracy", getAccuracy());
+                i.putExtras(sendAccuracy);
                 startActivity(i);
             }
 
@@ -166,5 +170,19 @@ public class AimingActivity extends Activity {
     public void onConfigurationChanged(Configuration newConfig)
     {
         super.onConfigurationChanged(newConfig);
+    }
+
+    // Get accuracy for aim
+    public int getAccuracy(){
+        int accuracy = 0;
+        if (mAimPos.x > mScrWidth / 2 - 40 && mAimPos.x < mScrWidth / 2 + 40
+                && mAimPos.y > mScrHeight / 2 - 40 && mAimPos.y < mScrHeight / 2 + 40){
+            accuracy = 10;
+        } else if (mAimPos.x > mScrWidth / 2 - 120 && mAimPos.x < mScrWidth / 2 + 120
+                && mAimPos.y > mScrHeight / 2 - 120 && mAimPos.y < mScrHeight / 2 + 120){
+            accuracy = 5;
+        }
+
+        return accuracy;
     }
 }

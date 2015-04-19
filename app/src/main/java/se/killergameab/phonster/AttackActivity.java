@@ -23,13 +23,15 @@ public class AttackActivity extends ActionBarActivity implements SensorEventList
     private float last_x, last_y, last_z;
     private static final int ATTACK_THRESHOLD = 1000;
     private TextView myText = null;
+    private int accuracy;
     Vibrator v = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attack);
-
+        Bundle getAccuracy = getIntent().getExtras();
+        accuracy = getAccuracy.getInt("accuracy"); // Get accuracy value passed from aimingActivity
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
@@ -83,7 +85,7 @@ public class AttackActivity extends ActionBarActivity implements SensorEventList
                     RelativeLayout rView = (RelativeLayout)findViewById(R.id.attack);
 
                     myText = new TextView(this);
-                    myText.setText("Attack successful");
+                    myText.setText("Attack successful with accuracy: " + accuracy);
 
                     rView.addView(myText);
 
