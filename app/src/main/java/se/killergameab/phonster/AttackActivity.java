@@ -31,7 +31,12 @@ public class AttackActivity extends ActionBarActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attack);
         Bundle getAccuracy = getIntent().getExtras();
-        accuracy = getAccuracy.getInt("accuracy"); // Get accuracy value passed from aimingActivity
+        if (getAccuracy != null){
+            accuracy = getAccuracy.getInt("accuracy"); // Get accuracy value passed from aimingActivity
+        } else {
+            accuracy = 10;
+        }
+
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
