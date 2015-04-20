@@ -3,6 +3,7 @@ package se.killergameab.phonster.map;
 import android.graphics.Color;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -21,7 +22,20 @@ public class GoogleMapPresenter {
 
         setupZones(googleMap, map.getZones());
         setupShop(googleMap, map.getShopLocation());
+        setupMonsters(googleMap, map.getMonsters());
 
+    }
+
+    private void setupMonsters(GoogleMap googleMap, List<Monster> monsters) {
+        for (Monster m : monsters) {
+            setupMonster(googleMap, m);
+        }
+    }
+
+    private void setupMonster(GoogleMap googleMap, Monster monster) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(monster.getPosition())
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
     }
 
     private void setupShop(GoogleMap googleMap, LatLng shopLocation) {

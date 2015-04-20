@@ -10,6 +10,7 @@ import java.util.List;
 public class Map {
 
     private List<Zone> zoneList;
+    private List<Monster> monsterList;
     private LatLng shopLocation;
 
     public static Map createDemoMap() {
@@ -25,12 +26,19 @@ public class Map {
 
         map.setShopLocation(new LatLng(55.714937, 13.212331));
 
+        map.addMonster(new Monster(new LatLng(55.714780, 13.212224)));
+
         return map;
+    }
+
+    private void addMonster(Monster monster) {
+        this.monsterList.add(monster);
     }
 
 
     public Map() {
         this.zoneList = new ArrayList<>();
+        this.monsterList = new ArrayList<>();
     }
 
     public void addZone(Zone z) {
@@ -48,6 +56,10 @@ public class Map {
 
     public LatLng getShopLocation() {
         return shopLocation;
+    }
+
+    public List<Monster> getMonsters() {
+        return monsterList;
     }
 }
 
