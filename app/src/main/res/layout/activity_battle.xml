@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/monsterPic"
-        android:src="@drawable/angrymonster"
+        android:src="@drawable/angry_monster"
         android:layout_alignBottom="@+id/monsterXP"
         android:layout_alignLeft="@+id/player"
         android:layout_alignStart="@+id/player" />
