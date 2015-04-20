@@ -9,4 +9,5 @@
 
     <string name="instructionsText">The instructions will be put here</string>
     <string name="title_activity_attack">AttackActivity</string>
+    <string name="title_activity_battle">BattleActivity</string>
 </resources>

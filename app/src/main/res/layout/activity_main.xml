@@ -50,4 +50,13 @@
         android:layout_below="@+id/aimingButton"
         android:layout_centerHorizontal="true"
         android:onClick="onAttackClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Battle"
+        android:id="@+id/battleButton"
+        android:layout_below="@+id/attackButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onBattleClick"/>
 </RelativeLayout>
