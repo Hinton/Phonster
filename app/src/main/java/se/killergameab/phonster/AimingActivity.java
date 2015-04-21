@@ -208,11 +208,11 @@ public class AimingActivity extends Activity {
     // Get accuracy for aim
     public int getAccuracy(){
         int accuracy = 0;
-        if (isInField(55, mAimPos.x, mAimPos.y)) {
+        if (isInField(82, mAimPos.x, mAimPos.y)) {
             accuracy = 100;
-        } else if (isInField(160, mAimPos.x, mAimPos.y)) {
+        } else if (isInField(230, mAimPos.x, mAimPos.y)) {
             accuracy = 50;
-        } else if (isInField(315, mAimPos.x, mAimPos.y)) {
+        } else if (isInField(493, mAimPos.x, mAimPos.y)) {
             accuracy = 20;
         }
         return accuracy;
