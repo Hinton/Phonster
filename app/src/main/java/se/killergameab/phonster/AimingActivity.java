@@ -28,6 +28,7 @@ public class AimingActivity extends Activity {
     int mScrWidth, mScrHeight;
     android.graphics.PointF mAimPos, mAimSpd;
     Vibrator v = null;
+    boolean in_first, in_second, in_third = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,7 +129,6 @@ public class AimingActivity extends Activity {
                 mAimPos.x += mAimSpd.x;
                 mAimPos.y += mAimSpd.y;
 
-                //REPLACED THIS
                 //if ball goes off screen, stay on the side
                 if (mAimPos.x > mScrWidth) mAimPos.x=mScrWidth;
                 if (mAimPos.y > mScrHeight) mAimPos.y=mScrHeight;
@@ -139,11 +139,32 @@ public class AimingActivity extends Activity {
                 mAimingView.mX = mAimPos.x;
                 mAimingView.mY = mAimPos.y;
 
-                //Check the area closest to the middle, vibrate if in it
-                if (mAimPos.x > mScrWidth / 2 - 40 && mAimPos.x < mScrWidth / 2 + 40
-                        && mAimPos.y > mScrHeight / 2 - 40 && mAimPos.y < mScrHeight / 2 + 40){
-                    v.vibrate(300);
+                //Vibrate if the ball is in a field
+                if (isInField(55, mAimPos.x, mAimPos.y)) {
+                    if (in_first) {
+                        v.vibrate(400);
+                        in_first = false;
+                        in_second = true;
+                        in_third = true;
+                    }
+                }else if (isInField(160, mAimPos.x, mAimPos.y)) {
+                    if (in_second) {
+                        v.vibrate(200);
+                        in_second = false;
+                        in_third = true;
+                        in_first = true;
+                    }
+                }else if (isInField(315, mAimPos.x, mAimPos.y)) {
+                    if (in_third) {
+                        v.vibrate(100);
+                        in_third = false;
+                        in_second = true;
+                        in_first = true;
+                    }
+                }else{
+                    in_third = true;
                 }
+
                 //redraw aim. Must run in background thread to prevent thread lock.
                 RedrawHandler.post(new Runnable() {
                     public void run() {
@@ -151,7 +172,7 @@ public class AimingActivity extends Activity {
                     }});
             }}; // TimerTask
 
-        mTmr.schedule(mTsk,10,10); //start timer
+        mTmr.schedule(mTsk,8,8); //start timer
         super.onResume();
     }
 
@@ -175,14 +196,20 @@ public class AimingActivity extends Activity {
     // Get accuracy for aim
     public int getAccuracy(){
         int accuracy = 0;
-        if (mAimPos.x > mScrWidth / 2 - 40 && mAimPos.x < mScrWidth / 2 + 40
-                && mAimPos.y > mScrHeight / 2 - 40 && mAimPos.y < mScrHeight / 2 + 40){
-            accuracy = 10;
-        } else if (mAimPos.x > mScrWidth / 2 - 120 && mAimPos.x < mScrWidth / 2 + 120
-                && mAimPos.y > mScrHeight / 2 - 120 && mAimPos.y < mScrHeight / 2 + 120){
-            accuracy = 5;
+        if (isInField(55, mAimPos.x, mAimPos.y)) {
+            accuracy = 100;
+        } else if (isInField(160, mAimPos.x, mAimPos.y)) {
+            accuracy = 50;
+        } else if (isInField(315, mAimPos.x, mAimPos.y)) {
+            accuracy = 20;
         }
-
         return accuracy;
+    }
+
+    //Check if ball coordinates are in a specific field
+    public boolean isInField(int radius, float x, float y){
+        return Math.pow((x - mScrWidth / 2), 2) +
+                Math.pow((y - mScrHeight / 2), 2) < Math.pow(radius, 2);
+
     }
 }
