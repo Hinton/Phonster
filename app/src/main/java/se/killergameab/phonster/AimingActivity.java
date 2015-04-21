@@ -27,7 +27,7 @@ public class AimingActivity extends Activity {
     int mScrWidth, mScrHeight;
     android.graphics.PointF mAimPos, mAimSpd;
     Vibrator v = null;
-    boolean in_first, in_second, in_third = true;
+    boolean in_first, in_second, in_third, outside = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,6 +110,7 @@ public class AimingActivity extends Activity {
         mTmr.cancel(); //kill\release timer (our only background thread)
         mTmr = null;
         mTsk = null;
+        v.cancel();
         super.onPause();
     }
 
@@ -139,29 +140,40 @@ public class AimingActivity extends Activity {
                 mAimingView.mY = mAimPos.y;
 
                 //Vibrate if the ball is in a field
-                if (isInField(55, mAimPos.x, mAimPos.y)) {
+                if (isInField(82, mAimPos.x, mAimPos.y)) {
                     if (in_first) {
-                        v.vibrate(400);
+                        long[] pattern = {0, 80, 50};
+                        v.vibrate(pattern, 0);
                         in_first = false;
                         in_second = true;
                         in_third = true;
+                        outside = true;
                     }
-                }else if (isInField(160, mAimPos.x, mAimPos.y)) {
+                }else if (isInField(230, mAimPos.x, mAimPos.y)) {
                     if (in_second) {
-                        v.vibrate(200);
+                        long[] pattern = {0, 80, 200};
+                        v.vibrate(pattern, 0);
                         in_second = false;
                         in_third = true;
                         in_first = true;
+                        outside = true;
                     }
-                }else if (isInField(315, mAimPos.x, mAimPos.y)) {
+                }else if (isInField(493, mAimPos.x, mAimPos.y)) {
                     if (in_third) {
-                        v.vibrate(100);
+                        long[] pattern = {0, 80, 350};
+                        v.vibrate(pattern, 0);
                         in_third = false;
                         in_second = true;
                         in_first = true;
+                        outside = true;
                     }
                 }else{
-                    in_third = true;
+                    if(outside){
+                        outside = false;
+                        in_third = true;
+                        long[] pattern = {0, 80, 600};
+                        v.vibrate(pattern, 0);
+                    }
                 }
 
                 //redraw aim. Must run in background thread to prevent thread lock.
@@ -181,6 +193,7 @@ public class AimingActivity extends Activity {
         super.onDestroy();
         //wait for threads to exit before clearing app
         System.runFinalizersOnExit(true);
+        v.cancel();
     }
 
     //listener for config change.

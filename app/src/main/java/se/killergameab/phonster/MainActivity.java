@@ -59,11 +59,6 @@ public class MainActivity extends ActionBarActivity {
         startActivity(i);
     }
 
-    public void onAiming2Click(View view) {
-        Intent i = new Intent(getApplicationContext(), AimingActivity2.class);
-        startActivity(i);
-    }
-
     public void onAttackClick(View view) {
         Intent i = new Intent(getApplicationContext(), AttackActivity.class);
         startActivity(i);
