@@ -45,9 +45,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Aiming 2"
+        android:id="@+id/aimingButton2"
+        android:layout_below="@+id/aimingButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onAiming2Click"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Attack"
         android:id="@+id/attackButton"
-        android:layout_below="@+id/aimingButton"
+        android:layout_below="@+id/aimingButton2"
         android:layout_centerHorizontal="true"
         android:onClick="onAttackClick"/>
 

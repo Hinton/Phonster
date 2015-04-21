@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.SensorEventListener;
 
-public class AimingActivity extends Activity {
+public class AimingActivity2 extends Activity {
     AimingView mAimingView = null;
     Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
     Timer mTmr = null;
@@ -27,7 +27,7 @@ public class AimingActivity extends Activity {
     int mScrWidth, mScrHeight;
     android.graphics.PointF mAimPos, mAimSpd;
     Vibrator v = null;
-    boolean in_first, in_second, in_third = true;
+    boolean in_first, in_second, in_third, outside = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,11 +36,11 @@ public class AimingActivity extends Activity {
         getWindow().setFlags(0xFFFFFFFF,
                 LayoutParams.FLAG_FULLSCREEN|LayoutParams.FLAG_KEEP_SCREEN_ON);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aiming);
+        setContentView(R.layout.activity_aiming2);
 
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         //create pointer to main screen
-        final FrameLayout mainAimView = (android.widget.FrameLayout) findViewById(R.id.main_aiming);
+        final FrameLayout mainAimView = (android.widget.FrameLayout) findViewById(R.id.main_aiming2);
 
         //get screen dimensions
         Display display = getWindowManager().getDefaultDisplay();
@@ -91,13 +91,14 @@ public class AimingActivity extends Activity {
         screenView.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AttackActivity.class);
                 // Create bundle to pass accuracy integer to AttackActivity
                 Bundle sendAccuracy = new Bundle();
                 sendAccuracy.putInt("accuracy", getAccuracy());
                 i.putExtras(sendAccuracy);
                 startActivity(i);
+                v.cancel(); // Stop vibrating if player pressed the screen
             }
 
         });
@@ -138,30 +139,71 @@ public class AimingActivity extends Activity {
                 mAimingView.mX = mAimPos.x;
                 mAimingView.mY = mAimPos.y;
 
+                // Patterns for vibration in the various fields. Nbr of vibrations = lenght/2. 
+                long[] pattern1 = new long[101];
+                pattern1[0] = 0;
+                for (int i = 1; i < pattern1.length; i+=2){
+                    pattern1[i] = 70;
+                    pattern1[i+1] = 250;
+                }
+
+                long[] pattern2 = new long[101];
+                pattern2[0] = 0;
+                for (int i = 1; i < pattern2.length; i+=2){
+                    pattern2[i] = 70;
+                    pattern2[i+1] = 350;
+                }
+
+                long[] pattern3 = new long[101];
+                pattern3[0] = 0;
+                for (int i = 1; i < pattern3.length; i+=2){
+                    pattern3[i] = 70;
+                    pattern3[i+1] = 450;
+                }
+
+                long[] pattern4 = new long[101];
+                pattern4[0] = 0;
+                for (int i = 1; i < pattern3.length; i+=2){
+                    pattern4[i] = 70;
+                    pattern4[i+1] = 550;
+                }
+
                 //Vibrate if the ball is in a field
-                if (isInField(55, mAimPos.x, mAimPos.y)) {
+                if (isInField(82, mAimPos.x, mAimPos.y)) {
                     if (in_first) {
-                        v.vibrate(400);
+                        v.vibrate(pattern1, -1);
                         in_first = false;
                         in_second = true;
                         in_third = true;
+                        outside = true;
                     }
-                }else if (isInField(160, mAimPos.x, mAimPos.y)) {
+
+                } else if (isInField(230, mAimPos.x, mAimPos.y)) {
                     if (in_second) {
-                        v.vibrate(200);
+                        v.vibrate(pattern2, -1);
                         in_second = false;
                         in_third = true;
                         in_first = true;
+                        outside = true;
                     }
-                }else if (isInField(315, mAimPos.x, mAimPos.y)) {
+
+                } else if (isInField(493, mAimPos.x, mAimPos.y)) {
                     if (in_third) {
-                        v.vibrate(100);
+                        v.vibrate(pattern3, -1);
                         in_third = false;
                         in_second = true;
                         in_first = true;
+                        outside = true;
                     }
-                }else{
-                    in_third = true;
+
+                } else {
+                    if (outside) {
+                        v.vibrate(pattern4, -1);
+                        outside = false;
+                        in_third = true;
+                        in_second = true;
+                        in_first = true;
+                    }
                 }
 
                 //redraw aim. Must run in background thread to prevent thread lock.
@@ -195,12 +237,14 @@ public class AimingActivity extends Activity {
     // Get accuracy for aim
     public int getAccuracy(){
         int accuracy = 0;
-        if (isInField(55, mAimPos.x, mAimPos.y)) {
+        if (isInField(82, mAimPos.x, mAimPos.y)) {
             accuracy = 100;
-        } else if (isInField(160, mAimPos.x, mAimPos.y)) {
+        } else if (isInField(230, mAimPos.x, mAimPos.y)) {
             accuracy = 50;
-        } else if (isInField(315, mAimPos.x, mAimPos.y)) {
+        } else if (isInField(493, mAimPos.x, mAimPos.y)) {
             accuracy = 20;
+        } else {
+            accuracy = 0;
         }
         return accuracy;
     }
