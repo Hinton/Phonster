@@ -11,9 +11,12 @@ import com.google.android.gms.maps.model.LatLng;
 import se.killergameab.phonster.map.GoogleMapPresenter;
 import se.killergameab.phonster.map.Map;
 
+import android.media.MediaPlayer;
+
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap gMap; // Might be null if Google Play services APK is not available.
+    public MediaPlayer mp1;
 
 
     @Override
@@ -21,6 +24,8 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        mp1 = MediaPlayer.create(this, R.raw.song1);
+        mp1.start();
     }
 
     @Override
