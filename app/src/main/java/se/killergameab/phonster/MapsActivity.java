@@ -6,7 +6,9 @@ import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import se.killergameab.phonster.map.GoogleMapPresenter;
 import se.killergameab.phonster.map.Map;
@@ -69,43 +71,31 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #gMap} is not null.
      */
     private void setUpMap() {
-        gMap.getUiSettings().setScrollGesturesEnabled(false);
-        gMap.getUiSettings().setZoomControlsEnabled(false);
-        gMap.getUiSettings().setMyLocationButtonEnabled(false);
-        gMap.getUiSettings().setMapToolbarEnabled(false);
+        UiSettings settings = gMap.getUiSettings();
+
+        settings.setAllGesturesEnabled(false);
+        settings.setCompassEnabled(false);
+        settings.setMapToolbarEnabled(false);
+        settings.setMyLocationButtonEnabled(false);
+        settings.setZoomControlsEnabled(false);
 
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.71445, 13.212652), 17));
         gMap.setMyLocationEnabled(true);
+        gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return false;
+            }
+        });
 
         setUpZones();
     }
 
     // Use http://www.birdtheme.org/useful/v3tool.html to get coordinates
     private void setUpZones() {
-
         Map map = Map.createDemoMap();
 
         GoogleMapPresenter googleMapPresenter = new GoogleMapPresenter(map);
         googleMapPresenter.setup(gMap);
-
-        /*
-
-        Map map = Map.createDemoMap();
-
-
-        PolygonOptions rectOptions = new PolygonOptions()
-                .add(new LatLng(55.714307, 13.210))
-                .add(new LatLng(55.714307, 13.216))  // North of the previous point, but at the same longitude
-                .add(new LatLng(55.713266, 13.216))  // Same latitude, and 30km to the west
-                .add(new LatLng(55.713266, 13.210))  // Same longitude, and 16km to the south
-                .add(new LatLng(55.714307, 13.210)); // Closes the polyline.
-
-        rectOptions.strokeWidth(0.5f);
-        rectOptions.fillColor(Color.argb(100, 255, 0, 0));
-
-
-        Polygon polyline = gMap.addPolygon(rectOptions);
-        */
-
     }
 }
