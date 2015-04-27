@@ -84,7 +84,7 @@ public class MapsActivity extends FragmentActivity {
         gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                return false;
+                return true;
             }
         });
 
