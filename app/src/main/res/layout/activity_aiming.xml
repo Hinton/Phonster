@@ -7,13 +7,50 @@
     android:id="@+id/main_aiming"
     tools:context=".AimingActivity">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Monster HP: 100"
+        android:id="@+id/monster"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Monster XP: 4"
+        android:id="@+id/monsterXP"
+        android:layout_marginTop="65dp"/>
+
     <ImageView
-        android:id="@+id/dartimage"
+        android:id="@+id/monsterPic"
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/dartimage"
+        android:src="@drawable/angry_monster"
         android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Player HP: 100"
+        android:id="@+id/player"
+        android:layout_marginBottom="55dp"
+        android:layout_gravity="right|bottom"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Player XP: 4"
+        android:id="@+id/playerXP"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="right|bottom"/>
+
 
     <!-- Invisible view used in the onClickListener -->
     <View

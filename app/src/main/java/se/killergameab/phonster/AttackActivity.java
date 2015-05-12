@@ -33,6 +33,7 @@ public class AttackActivity extends ActionBarActivity implements SensorEventList
         Bundle getAccuracy = getIntent().getExtras();
         if (getAccuracy != null){
             accuracy = getAccuracy.getInt("accuracy"); // Get accuracy value passed from aimingActivity
+
         } else {
             accuracy = 10;
         }
@@ -119,4 +120,5 @@ public class AttackActivity extends ActionBarActivity implements SensorEventList
         super.onResume();
         senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
+
 }

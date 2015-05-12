@@ -18,6 +18,8 @@ import android.hardware.SensorManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.SensorEventListener;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class AimingActivity extends Activity {
     AimingView mAimingView = null;
@@ -28,6 +30,7 @@ public class AimingActivity extends Activity {
     android.graphics.PointF mAimPos, mAimSpd;
     Vibrator v = null;
     boolean in_first, in_second, in_third, outside = true;
+    Monster monster = new Monster();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class AimingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aiming);
 
-        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         //create pointer to main screen
         final FrameLayout mainAimView = (android.widget.FrameLayout) findViewById(R.id.main_aiming);
 
@@ -97,6 +100,10 @@ public class AimingActivity extends Activity {
                 Bundle sendAccuracy = new Bundle();
                 sendAccuracy.putInt("accuracy", getAccuracy());
                 i.putExtras(sendAccuracy);
+
+                TextView monsterHP = (TextView) findViewById(R.id.monster);
+                monsterHP.setText("MonsterHP: " + monster.lifeLeft(getAccuracy()));
+
                 startActivity(i);
             }
 
@@ -171,8 +178,7 @@ public class AimingActivity extends Activity {
                     if(outside){
                         outside = false;
                         in_third = true;
-                        long[] pattern = {0, 80, 600};
-                        v.vibrate(pattern, 0);
+                        v.cancel();
                     }
                 }
 
