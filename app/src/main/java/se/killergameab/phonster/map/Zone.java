@@ -20,4 +20,18 @@ public class Zone {
         return color;
     }
 
+    public boolean contains(LatLng position) {
+
+        int i;
+        int j;
+        boolean result = false;
+        for (i = 0, j = coordinates.length - 1; i < coordinates.length; j = i++) {
+            if ((coordinates[i].longitude > position.longitude) != (coordinates[j].longitude > position.longitude) &&
+                    (position.latitude < (coordinates[j].latitude - coordinates[i].latitude) * (position.longitude - coordinates[i].longitude) / (coordinates[j].longitude-coordinates[i].longitude) + coordinates[i].latitude)) {
+                result = !result;
+            }
+        }
+        return result;
+
+    }
 }

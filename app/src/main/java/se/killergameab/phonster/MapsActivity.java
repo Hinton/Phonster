@@ -88,14 +88,10 @@ public class MapsActivity extends FragmentActivity {
             }
         });
 
-        setUpZones();
-    }
-
-    // Use http://www.birdtheme.org/useful/v3tool.html to get coordinates
-    private void setUpZones() {
         Map map = Map.createDemoMap();
 
         GoogleMapPresenter googleMapPresenter = new GoogleMapPresenter(map);
         googleMapPresenter.setup(gMap);
     }
+    // Use http://www.birdtheme.org/useful/v3tool.html to get coordinates
 }
