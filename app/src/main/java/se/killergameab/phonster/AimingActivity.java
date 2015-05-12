@@ -129,20 +129,11 @@ public class AimingActivity extends Activity {
                 TextView playerHP = (TextView) findViewById(R.id.playerHP2);
                 int playerLife = Integer.parseInt(playerHP.getText().toString());
 
-
-                System.out.print(playerLife);
-
-                while (monsterLife > 0 && playerLife > 0) {
-                    if (turn == 1) {
-                        int ratio = monsterExperience / playerExperience;
-                        int lifeLeft = player.lifeLeft(ratio);
-                        playerLife = lifeLeft;
-                        playerHP.setText("Player HP: " + String.valueOf(lifeLeft));
-                        turn = 0;
-                        System.out.print(lifeLeft);
-                    } else if (turn == 0) {
+                //Battle
+                if (turn == 0 && playerLife > 0) {
                         //System.out.print();
                         mCountDownTimer.onFinish();
+
                         Intent i = new Intent(getApplicationContext(), AttackActivity.class);
 
                         // Create bundle to pass accuracy integer to AttackActivity
@@ -151,17 +142,33 @@ public class AimingActivity extends Activity {
                         i.putExtras(sendAccuracy);
 
                         int lifeLeft = monster.lifeLeft(getAccuracy());
-                        monsterLife = lifeLeft;
-                        monsterHP.setText("Monster HP: " + String.valueOf(lifeLeft));
+                        monsterLife = lifeLeft - getProgress();
 
-                        System.out.print(lifeLeft);
-                        turn = 0;
+                        if(monsterLife < 0) {
+                            monsterHP.setText(String.valueOf(0));
+                        } else {
+                            monsterHP.setText(String.valueOf(monsterLife));
+                        }
+
+                        turn = 1;
 
                         startActivity(i);
                     }
+
+                    if(turn == 1 && monsterLife > 0) {
+                        int ratio = monsterExperience / playerExperience * 15;
+                        int lifeLeft = player.lifeLeft(ratio);
+                        playerLife = lifeLeft;
+
+                        if(playerLife < 0){
+                            playerHP.setText(String.valueOf(0));
+                        } else {
+                            playerHP.setText(String.valueOf(lifeLeft));
+                            turn = 0;
+                        }
+                    }
                 }
-            }
-        });
+            });
 
         //Create progress bar
         //http://stackoverflow.com/questions/10241633/android-progressbar-countdown
@@ -292,14 +299,30 @@ public class AimingActivity extends Activity {
     public int getAccuracy() {
         int accuracy = 0;
         if (isInField(82, mAimPos.x, mAimPos.y)) {
-            accuracy = 100;
+            accuracy = 40;
         } else if (isInField(230, mAimPos.x, mAimPos.y)) {
-            accuracy = 50;
-        } else if (isInField(493, mAimPos.x, mAimPos.y)) {
             accuracy = 20;
+        } else if (isInField(493, mAimPos.x, mAimPos.y)) {
+            accuracy = 10;
         }
         return accuracy;
     }
+
+    // Fields for progressbar
+    public int getProgress() {
+        int progress = 0;
+        if (time >= 0 && time < 2) {
+            progress = 40;
+        } else if (time >= 2 && time < 3) {
+            progress = 30;
+        } else if (time >= 3 && time < 4) {
+            progress = 20;
+        } else if (time >= 4 && time < 5) {
+            progress = 10;
+        }
+        return progress;
+    }
+
 
     //Check if ball coordinates are in a specific field
     public boolean isInField(int radius, float x, float y){
