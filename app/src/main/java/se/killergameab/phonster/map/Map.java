@@ -16,7 +16,7 @@ public class Map {
     public static Map createDemoMap() {
         Map map = new Map();
 
-        map.addZone(new Zone(new LatLng[]{
+        map.addZone(new Zone(1, new LatLng[]{
                 new LatLng(55.714307, 13.210),
                 new LatLng(55.714307, 13.216),
                 new LatLng(55.712266, 13.216),
@@ -24,7 +24,7 @@ public class Map {
                 new LatLng(55.714307, 13.210)
         }, Color.argb(100, 255, 0, 0)));
 
-        map.addZone(new Zone(new LatLng[]{
+        map.addZone(new Zone(2, new LatLng[]{
                 new LatLng(55.716434, 13.212235),
                 new LatLng(55.716434, 13.216),
                 new LatLng(55.714307, 13.216),
@@ -32,7 +32,7 @@ public class Map {
                 new LatLng(55.716434, 13.212235)
         }, Color.argb(100, 0, 255, 0)));
 
-        map.addZone(new Zone(new LatLng[]{
+        map.addZone(new Zone(3, new LatLng[]{
                 new LatLng(55.716434, 13.200),
                 new LatLng(55.716434, 13.212235),
                 new LatLng(55.714307, 13.212235),

@@ -1,5 +1,8 @@
 package se.killergameab.phonster;
 
+import android.content.Intent;
+import android.location.Location;
+import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -12,6 +15,7 @@ import com.google.android.gms.maps.model.Marker;
 
 import se.killergameab.phonster.map.GoogleMapPresenter;
 import se.killergameab.phonster.map.Map;
+import se.killergameab.phonster.map.Zone;
 
 import android.media.MediaPlayer;
 
@@ -88,10 +92,29 @@ public class MapsActivity extends FragmentActivity {
             }
         });
 
-        Map map = Map.createDemoMap();
+        final Map map = Map.createDemoMap();
 
         GoogleMapPresenter googleMapPresenter = new GoogleMapPresenter(map);
         googleMapPresenter.setup(gMap);
+
+        new CountDownTimer(10000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                //mTextField.setText("done!");
+
+                Location myLocation = gMap.getMyLocation();
+                //System.out.println(myLocation.getLatitude() + " " + myLocation.getLongitude());
+                Zone z = map.getCurrentZone(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
+
+                Intent i = new Intent(getApplicationContext(), AimingActivity.class);
+                i.putExtra("zone", z.getZoneId());
+                startActivity(i);
+            }
+        }.start();
     }
     // Use http://www.birdtheme.org/useful/v3tool.html to get coordinates
 }

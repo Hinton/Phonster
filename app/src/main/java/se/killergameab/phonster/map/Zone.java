@@ -4,12 +4,18 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Zone {
 
+    private int id;
     private LatLng[] coordinates;
     private int color;
 
-    public Zone(LatLng[] coordinates, int color) {
+    public Zone(int id, LatLng[] coordinates, int color) {
+        this.id = id;
         this.coordinates = coordinates;
         this.color = color;
+    }
+
+    public int getZoneId() {
+        return id;
     }
 
     public LatLng[] getCoordinates() {
