@@ -39,6 +39,10 @@ public class AimingActivity extends Activity {
     Player player = new Player();
     int turn = 0;
 
+    ProgressBar mProgressBar;
+    CountDownTimer mCountDownTimer;
+    int time=0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -130,7 +134,7 @@ public class AimingActivity extends Activity {
                         System.out.print(lifeLeft);
                     } else if (turn == 0) {
                         //System.out.print();
-
+                        mCountDownTimer.onFinish();
                         Intent i = new Intent(getApplicationContext(), AttackActivity.class);
 
                         // Create bundle to pass accuracy integer to AttackActivity
@@ -150,6 +154,31 @@ public class AimingActivity extends Activity {
                 }
             }
         });
+
+        //Create progress bar
+        //http://stackoverflow.com/questions/10241633/android-progressbar-countdown
+        mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
+        mProgressBar.setProgress(time);
+        mCountDownTimer=new CountDownTimer(5000,950) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
+                time++;
+                mProgressBar.setProgress(time);
+                mProgressBar.setRotation(180);
+                Drawable drawable = mProgressBar.getProgressDrawable();
+                drawable.setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
+
+            @Override
+            public void onFinish() {
+                //Do what you want
+                time++;
+                mProgressBar.setProgress(time);
+            }
+        };
+        mCountDownTimer.start();
     }
 
     //For state flow see http://developer.android.com/reference/android/app/Activity.html
