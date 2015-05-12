@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,17 +23,23 @@ import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.os.CountDownTimer;
 
-import static java.lang.Integer.parseInt;
-
 public class AimingActivity extends Activity {
+
     AimingView mAimingView = null;
     Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
+
     Timer mTmr = null;
     TimerTask mTsk = null;
-    int mScrWidth, mScrHeight;
+
+    Point displaySize;
     android.graphics.PointF mAimPos, mAimSpd;
     Vibrator v = null;
-    boolean in_first, in_second, in_third, outside = true;
+
+    public enum AimField {
+        FIRST, SECOND, THIRD, OUTSIDE
+    }
+
+    public AimField currentField = AimField.OUTSIDE;
 
     Monster monster = new Monster();
     Player player = new Player();
@@ -59,14 +65,15 @@ public class AimingActivity extends Activity {
 
         //get screen dimensions
         Display display = getWindowManager().getDefaultDisplay();
-        mScrWidth = display.getWidth();
-        mScrHeight = display.getHeight();
+        displaySize = new Point();
+        display.getSize(displaySize);
+
         mAimPos = new android.graphics.PointF();
         mAimSpd = new android.graphics.PointF();
 
         //create variables for aim position and speed
-        mAimPos.x = mScrWidth / 2;
-        mAimPos.y = mScrHeight / 2 + 650;
+        mAimPos.x = displaySize.x / 2;
+        mAimPos.y = displaySize.y / 2 + 650;
         mAimSpd.x = 0;
         mAimSpd.y = 0;
 
@@ -208,8 +215,8 @@ public class AimingActivity extends Activity {
                 mAimPos.y += mAimSpd.y;
 
                 //if ball goes off screen, stay on the side
-                if (mAimPos.x > mScrWidth) mAimPos.x=mScrWidth;
-                if (mAimPos.y > mScrHeight) mAimPos.y=mScrHeight;
+                if (mAimPos.x > displaySize.x) mAimPos.x = displaySize.x;
+                if (mAimPos.y > displaySize.y) mAimPos.y = displaySize.y;
                 if (mAimPos.x < 0) mAimPos.x=0;
                 if (mAimPos.y < 0) mAimPos.y=0;
 
@@ -217,38 +224,37 @@ public class AimingActivity extends Activity {
                 mAimingView.mX = mAimPos.x;
                 mAimingView.mY = mAimPos.y;
 
+                int radius = 500;
+                int firstFieldRadius = (int) (radius * 0.15f);
+                int seconFieldRadius = (int) (radius * 0.45f);
+                int thirdFieldRadius = (int) (radius * 1.0f);
+
                 //Vibrate if the ball is in a field
-                if (isInField(82, mAimPos.x, mAimPos.y)) {
-                    if (in_first) {
+                if (isInField(firstFieldRadius, mAimPos.x, mAimPos.y)) {
+                    if (currentField != AimField.FIRST) {
+                        currentField = AimField.FIRST;
+
                         long[] pattern = {0, 80, 50};
                         v.vibrate(pattern, 0);
-                        in_first = false;
-                        in_second = true;
-                        in_third = true;
-                        outside = true;
                     }
-                }else if (isInField(230, mAimPos.x, mAimPos.y)) {
-                    if (in_second) {
+                } else if (isInField(seconFieldRadius, mAimPos.x, mAimPos.y)) {
+                    if (currentField != AimField.SECOND) {
+                        currentField = AimField.SECOND;
+
                         long[] pattern = {0, 80, 200};
                         v.vibrate(pattern, 0);
-                        in_second = false;
-                        in_third = true;
-                        in_first = true;
-                        outside = true;
                     }
-                }else if (isInField(493, mAimPos.x, mAimPos.y)) {
-                    if (in_third) {
+                } else if (isInField(thirdFieldRadius, mAimPos.x, mAimPos.y)) {
+                    if (currentField != AimField.THIRD) {
+                        currentField = AimField.THIRD;
+
                         long[] pattern = {0, 80, 350};
                         v.vibrate(pattern, 0);
-                        in_third = false;
-                        in_second = true;
-                        in_first = true;
-                        outside = true;
                     }
-                }else{
-                    if(outside){
-                        outside = false;
-                        in_third = true;
+                } else {
+                    if(currentField != AimField.OUTSIDE){
+                        currentField = AimField.OUTSIDE;
+
                         v.cancel();
                     }
                 }
@@ -297,8 +303,8 @@ public class AimingActivity extends Activity {
 
     //Check if ball coordinates are in a specific field
     public boolean isInField(int radius, float x, float y){
-        return Math.pow((x - mScrWidth / 2), 2) +
-                Math.pow((y - mScrHeight / 2), 2) < Math.pow(radius, 2);
+        return Math.pow((x - displaySize.x / 2), 2) +
+                Math.pow((y - displaySize.y / 2), 2) < Math.pow(radius, 2);
 
     }
 }
