@@ -66,7 +66,7 @@ public class GoogleMapPresenter {
         //        .add(new LatLng(55.714307, 13.210)); // Closes the polyline.
 
         polygonOptions.strokeWidth(0.5f);
-        polygonOptions.fillColor(Color.argb(100, 255, 0, 0));
+        polygonOptions.fillColor(z.getColor());
 
         googleMap.addPolygon(polygonOptions);
     }
