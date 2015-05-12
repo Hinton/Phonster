@@ -5,6 +5,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -18,8 +19,9 @@ import android.hardware.SensorManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.SensorEventListener;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ProgressBar;
+import android.os.CountDownTimer;
 
 public class AimingActivity extends Activity {
     AimingView mAimingView = null;
@@ -31,6 +33,9 @@ public class AimingActivity extends Activity {
     Vibrator v = null;
     boolean in_first, in_second, in_third, outside = true;
     Monster monster = new Monster();
+    ProgressBar mProgressBar;
+    CountDownTimer mCountDownTimer;
+    int time=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +58,8 @@ public class AimingActivity extends Activity {
         mAimSpd = new android.graphics.PointF();
 
         //create variables for aim position and speed
-        mAimPos.x = mScrWidth;
-        mAimPos.y = mScrHeight;
+        mAimPos.x = mScrWidth / 2;
+        mAimPos.y = mScrHeight / 2 + 650;
         mAimSpd.x = 0;
         mAimSpd.y = 0;
 
@@ -95,6 +100,7 @@ public class AimingActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                mCountDownTimer.onFinish();
                 Intent i = new Intent(getApplicationContext(), AttackActivity.class);
                 // Create bundle to pass accuracy integer to AttackActivity
                 Bundle sendAccuracy = new Bundle();
@@ -102,12 +108,38 @@ public class AimingActivity extends Activity {
                 i.putExtras(sendAccuracy);
 
                 TextView monsterHP = (TextView) findViewById(R.id.monster);
-                monsterHP.setText("MonsterHP: " + monster.lifeLeft(getAccuracy()));
+                //Temporary time hit affect
+                monsterHP.setText("MonsterHP: " + monster.lifeLeft(getAccuracy() - time));
 
                 startActivity(i);
             }
 
         });
+
+        //Create progress bar
+        //http://stackoverflow.com/questions/10241633/android-progressbar-countdown
+        mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
+        mProgressBar.setProgress(time);
+        mCountDownTimer=new CountDownTimer(5000,950) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
+                time++;
+                mProgressBar.setProgress(time);
+                mProgressBar.setRotation(180);
+                Drawable drawable = mProgressBar.getProgressDrawable();
+                drawable.setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
+
+            @Override
+            public void onFinish() {
+                //Do what you want
+                time++;
+                mProgressBar.setProgress(time);
+            }
+        };
+        mCountDownTimer.start();
     }
 
     //For state flow see http://developer.android.com/reference/android/app/Activity.html
