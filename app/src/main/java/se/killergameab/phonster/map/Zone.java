@@ -34,12 +34,4 @@ public class Zone {
         return result;
 
     }
-
-    private boolean inLongitude(double longitude) {
-        return coordinates[0].longitude < longitude && coordinates[2].longitude > longitude;
-    }
-
-    public boolean inLatitude(double latitude) {
-        return coordinates[0].latitude < latitude && coordinates[2].latitude > latitude;
-    }
 }
