@@ -49,10 +49,11 @@ public class AimingActivity extends Activity {
         //set app to full screen and keep screen on
         getWindow().setFlags(0xFFFFFFFF,
                 LayoutParams.FLAG_FULLSCREEN | LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_aiming);
 
-        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         //create pointer to main screen
         final FrameLayout mainAimView = (android.widget.FrameLayout) findViewById(R.id.main_aiming);
 
