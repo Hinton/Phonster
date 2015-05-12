@@ -120,7 +120,7 @@ public class AimingActivity extends Activity {
 
                 System.out.print(playerLife);
 
-                while (monsterLife > 0 || playerLife > 0) {
+                while (monsterLife > 0 && playerLife > 0) {
                     if (turn == 1) {
                         int ratio = monsterExperience / playerExperience;
                         int lifeLeft = player.lifeLeft(ratio);

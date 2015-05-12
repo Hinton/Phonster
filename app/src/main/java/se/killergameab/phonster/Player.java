@@ -8,6 +8,8 @@ public class Player {
     }
 
     public int lifeLeft(int accuracy) {
-        return life = life - accuracy;
+        life = life - accuracy;
+
+        return life;
     }
 }

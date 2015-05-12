@@ -8,6 +8,8 @@ public class Monster {
     }
 
     public int lifeLeft(int accuracy) {
-        return life = life - accuracy;
+        life = life - accuracy;
+
+        return life;
     }
 }
