@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.os.CountDownTimer;
 
+import static java.lang.Integer.parseInt;
+
 public class AimingActivity extends Activity {
     AimingView mAimingView = null;
     Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
@@ -32,17 +34,17 @@ public class AimingActivity extends Activity {
     android.graphics.PointF mAimPos, mAimSpd;
     Vibrator v = null;
     boolean in_first, in_second, in_third, outside = true;
+
     Monster monster = new Monster();
-    ProgressBar mProgressBar;
-    CountDownTimer mCountDownTimer;
-    int time=0;
+    Player player = new Player();
+    int turn = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         //set app to full screen and keep screen on
         getWindow().setFlags(0xFFFFFFFF,
-                LayoutParams.FLAG_FULLSCREEN|LayoutParams.FLAG_KEEP_SCREEN_ON);
+                LayoutParams.FLAG_FULLSCREEN | LayoutParams.FLAG_KEEP_SCREEN_ON);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aiming);
 
@@ -75,7 +77,7 @@ public class AimingActivity extends Activity {
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //listener for accelerometer, use anonymous class for simplicity
-        ((SensorManager)getSystemService(Context.SENSOR_SERVICE)).registerListener(
+        ((SensorManager) getSystemService(Context.SENSOR_SERVICE)).registerListener(
                 new SensorEventListener() {
                     @Override
                     public void onSensorChanged(SensorEvent event) {
@@ -100,52 +102,59 @@ public class AimingActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                mCountDownTimer.onFinish();
-                Intent i = new Intent(getApplicationContext(), AttackActivity.class);
-                // Create bundle to pass accuracy integer to AttackActivity
-                Bundle sendAccuracy = new Bundle();
-                sendAccuracy.putInt("accuracy", getAccuracy());
-                i.putExtras(sendAccuracy);
 
-                TextView monsterHP = (TextView) findViewById(R.id.monster);
-                //Temporary time hit affect
-                monsterHP.setText("MonsterHP: " + monster.lifeLeft(getAccuracy() - time));
+                //Monster
+                TextView monsterXP = (TextView) findViewById(R.id.monsterXP2);
+                int monsterExperience = Integer.parseInt(monsterXP.getText().toString());
 
-                startActivity(i);
+                TextView monsterHP = (TextView) findViewById(R.id.monsterHP2);
+                int monsterLife = Integer.parseInt(monsterHP.getText().toString());
+
+                //Player
+                TextView playerXP = (TextView) findViewById(R.id.playerXP2);
+                int playerExperience = Integer.parseInt(playerXP.getText().toString());
+
+                TextView playerHP = (TextView) findViewById(R.id.playerHP2);
+                int playerLife = Integer.parseInt(playerHP.getText().toString());
+
+
+                System.out.print(playerLife);
+
+                while (monsterLife > 0 || playerLife > 0) {
+                    if (turn == 1) {
+                        int ratio = monsterExperience / playerExperience;
+                        int lifeLeft = player.lifeLeft(ratio);
+                        playerLife = lifeLeft;
+                        playerHP.setText("Player HP: " + String.valueOf(lifeLeft));
+                        turn = 0;
+                        System.out.print(lifeLeft);
+                    } else if (turn == 0) {
+                        //System.out.print();
+
+                        Intent i = new Intent(getApplicationContext(), AttackActivity.class);
+
+                        // Create bundle to pass accuracy integer to AttackActivity
+                        Bundle sendAccuracy = new Bundle();
+                        sendAccuracy.putInt("accuracy", getAccuracy());
+                        i.putExtras(sendAccuracy);
+
+                        int lifeLeft = monster.lifeLeft(getAccuracy());
+                        monsterLife = lifeLeft;
+                        monsterHP.setText("Monster HP: " + String.valueOf(lifeLeft));
+
+                        System.out.print(lifeLeft);
+                        turn = 0;
+
+                        startActivity(i);
+                    }
+                }
             }
-
         });
-
-        //Create progress bar
-        //http://stackoverflow.com/questions/10241633/android-progressbar-countdown
-        mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
-        mProgressBar.setProgress(time);
-        mCountDownTimer=new CountDownTimer(5000,950) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                //Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
-                time++;
-                mProgressBar.setProgress(time);
-                mProgressBar.setRotation(180);
-                Drawable drawable = mProgressBar.getProgressDrawable();
-                drawable.setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-            }
-
-            @Override
-            public void onFinish() {
-                //Do what you want
-                time++;
-                mProgressBar.setProgress(time);
-            }
-        };
-        mCountDownTimer.start();
     }
 
     //For state flow see http://developer.android.com/reference/android/app/Activity.html
     @Override
-    public void onPause() //app moved to background, stop background threads
-    {
+    public void onPause() { //app moved to background, stop background threads
         mTmr.cancel(); //kill\release timer (our only background thread)
         mTmr = null;
         mTsk = null;
@@ -244,7 +253,7 @@ public class AimingActivity extends Activity {
     }
 
     // Get accuracy for aim
-    public int getAccuracy(){
+    public int getAccuracy() {
         int accuracy = 0;
         if (isInField(82, mAimPos.x, mAimPos.y)) {
             accuracy = 100;
