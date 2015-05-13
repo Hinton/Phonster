@@ -5,7 +5,6 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -21,8 +20,6 @@ import android.content.res.Configuration;
 import android.hardware.SensorEventListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ProgressBar;
-import android.os.CountDownTimer;
 
 import se.killergameab.phonster.Battle.Battle;
 import se.killergameab.phonster.Battle.Monster;
@@ -49,11 +46,8 @@ public class AimingActivity extends Activity {
 
     public AimField currentField = AimField.OUTSIDE;
 
-    int turn = 0;
-
-    ProgressBar mProgressBar;
-    CountDownTimer mCountDownTimer;
-    int time = 0;
+    private long startTime = 0;
+    private int countDownTime = 7500;
 
     ImageView img;
     int zone;
@@ -79,6 +73,10 @@ public class AimingActivity extends Activity {
         }
 
         setupTextData(game.getActiveBattle());
+
+        startTime = System.currentTimeMillis();
+        CountDownBar countDownBar = (CountDownBar) findViewById(R.id.progressbar);
+        countDownBar.startCountdown(countDownTime);
 
         // Create pointer to main screen
         final FrameLayout mainAimView = (android.widget.FrameLayout) findViewById(R.id.main_aiming);
@@ -139,7 +137,6 @@ public class AimingActivity extends Activity {
                 //Battle
                 if (player.getLife() > 0) {
                     //System.out.print();
-                    mCountDownTimer.onFinish();
 
                     // Do an attack.
                     battle.attack(getAccuracy(), getProgress());
@@ -148,33 +145,9 @@ public class AimingActivity extends Activity {
                     Intent i = new Intent(getApplicationContext(), AttackActivity.class);
                     startActivity(i);
                 }
-                }
-            });
-
-        //Create progress bar
-        //http://stackoverflow.com/questions/10241633/android-progressbar-countdown
-        mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
-        mProgressBar.setProgress(time);
-        mCountDownTimer = new CountDownTimer(5000,950) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                //Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
-                time++;
-                mProgressBar.setProgress(time);
-                mProgressBar.setRotation(180);
-                Drawable drawable = mProgressBar.getProgressDrawable();
-                drawable.setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
             }
+        });
 
-            @Override
-            public void onFinish() {
-                //Do what you want
-                time++;
-                mProgressBar.setProgress(time);
-            }
-        };
-        mCountDownTimer.start();
     }
 
     // Setup the initial information
@@ -322,14 +295,17 @@ public class AimingActivity extends Activity {
 
     // Fields for progressbar
     public int getProgress() {
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        elapsedTime /= 1000;
+
         int progress = 0;
-        if (time >= 0 && time < 2) {
+        if (elapsedTime >= 0 && elapsedTime < 2) {
             progress = 40;
-        } else if (time >= 2 && time < 3) {
+        } else if (elapsedTime >= 2 && elapsedTime < 3) {
             progress = 30;
-        } else if (time >= 3 && time < 4) {
+        } else if (elapsedTime >= 3 && elapsedTime < 4) {
             progress = 20;
-        } else if (time >= 4 && time < 5) {
+        } else if (elapsedTime >= 4 && elapsedTime < 5) {
             progress = 10;
         }
         return progress;
