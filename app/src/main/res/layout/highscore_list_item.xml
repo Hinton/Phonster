@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:touchscreenBlocksFocus="false"
+    android:transitionGroup="false">
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="6dip"
+        android:src="@drawable/icon_user"
+        android:scaleType="fitStart"
+        android:paddingTop="6dp" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:elegantTextHeight="false"
+        android:phoneNumber="false"
+        android:textSize="18dp"
+        android:text="Test"
+        android:paddingTop="6dp" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:textSize="18dp"
+        android:singleLine="false"
+        android:paddingTop="6dp" />
+</LinearLayout>
