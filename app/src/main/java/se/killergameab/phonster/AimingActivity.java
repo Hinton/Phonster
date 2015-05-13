@@ -24,9 +24,13 @@ import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.os.CountDownTimer;
 
-import se.killergameab.phonster.map.Zone;
+import se.killergameab.phonster.Battle.Battle;
+import se.killergameab.phonster.Battle.Monster;
+import se.killergameab.phonster.Battle.Player;
 
 public class AimingActivity extends Activity {
+
+    public Game game;
 
     AimingView mAimingView = null;
     Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
@@ -35,7 +39,8 @@ public class AimingActivity extends Activity {
     TimerTask mTsk = null;
 
     Point displaySize;
-    android.graphics.PointF mAimPos, mAimSpd;
+    android.graphics.PointF mAimPos = new android.graphics.PointF(),
+                            mAimSpd = new android.graphics.PointF();
     Vibrator v = null;
 
     public enum AimField {
@@ -44,7 +49,6 @@ public class AimingActivity extends Activity {
 
     public AimField currentField = AimField.OUTSIDE;
 
-    Player player = new Player();
     int turn = 0;
 
     ProgressBar mProgressBar;
@@ -53,49 +57,44 @@ public class AimingActivity extends Activity {
 
     ImageView img;
     int zone;
-    Monster monster;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(0xFFFFFFFF,
                 LayoutParams.FLAG_FULLSCREEN | LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        Intent i = getIntent();
-        zone = i.getIntExtra("zone", -1);
-
-        monster = new Monster(zone);
-        img = (ImageView) findViewById(R.id.none);
-
-        switch (zone) {
-            case 1: img.setImageResource(R.drawable.monster1);
-            case 2: img.setImageResource(R.drawable.monster2);
-            case 3: img.setImageResource(R.drawable.monster3);
-        }
-
-
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_aiming);
 
-        //create pointer to main screen
+        game = Game.instance();
+
+        // Check if we need to create a new battle
+        if (game.getActiveBattle() == null) {
+            // Get the data from the map.
+            Intent i = getIntent();
+            zone = i.getIntExtra("zone", -1);
+
+            Monster monster = new Monster(zone);
+            game.newBattle(monster);
+        }
+
+        setupTextData(game.getActiveBattle());
+
+        // Create pointer to main screen
         final FrameLayout mainAimView = (android.widget.FrameLayout) findViewById(R.id.main_aiming);
 
-        //get screen dimensions
+        // Get screen dimensions
         Display display = getWindowManager().getDefaultDisplay();
         displaySize = new Point();
         display.getSize(displaySize);
 
-        mAimPos = new android.graphics.PointF();
-        mAimSpd = new android.graphics.PointF();
-
-        //create variables for aim position and speed
+        // Create variables for aim position and speed
         mAimPos.x = displaySize.x / 2;
         mAimPos.y = displaySize.y / 2 + 650;
         mAimSpd.x = 0;
         mAimSpd.y = 0;
 
-        //create initial aim
+        // Create initial aim
         mAimingView = new AimingView(this, mAimPos.x, mAimPos.y, 12);
 
         mainAimView.addView(mAimingView); //add aim to main screen
@@ -133,22 +132,12 @@ public class AimingActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                //Monster
-                TextView monsterXP = (TextView) findViewById(R.id.monsterXP2);
-                int monsterExperience = Integer.parseInt(monsterXP.getText().toString());
-
-                TextView monsterHP = (TextView) findViewById(R.id.monsterHP2);
-                int monsterLife = Integer.parseInt(monsterHP.getText().toString());
-
-                //Player
-                TextView playerXP = (TextView) findViewById(R.id.playerXP2);
-                int playerExperience = Integer.parseInt(playerXP.getText().toString());
-
-                TextView playerHP = (TextView) findViewById(R.id.playerHP2);
-                int playerLife = Integer.parseInt(playerHP.getText().toString());
+                Battle battle = game.getActiveBattle();
+                Player player = battle.getPlayer();
+                Monster monster = battle.getMonster();
 
                 //Battle
-                if (turn == 0 && playerLife > 0) {
+                if (turn == 0 && player.getLife() > 0) {
                     //System.out.print();
                         mCountDownTimer.onFinish();
 
@@ -159,21 +148,14 @@ public class AimingActivity extends Activity {
                         sendAccuracy.putInt("accuracy", getAccuracy());
                         i.putExtras(sendAccuracy);
 
-                        int lifeLeft = monster.lifeLeft(getAccuracy());
-                        monsterLife = lifeLeft - getProgress();
-
-                        if(monsterLife < 0) {
-                            monsterHP.setText(String.valueOf(0));
-                        } else {
-                            monsterHP.setText(String.valueOf(monsterLife));
-                        }
+                        monster.attack(getAccuracy(), getProgress());
 
                         turn = 1;
 
                         startActivity(i);
                     }
 
-                    if(turn == 1 && monsterLife > 0) {
+                    if(turn == 1 && monster.getLife() > 0) {
 
                         switch (zone) {
                             case 1: img.setImageResource(R.drawable.monster1_hit);
@@ -181,14 +163,11 @@ public class AimingActivity extends Activity {
                             case 3: img.setImageResource(R.drawable.monster3_hit);
                         }
 
-                        int ratio = monsterExperience / playerExperience * 15;
-                        int lifeLeft = player.lifeLeft(ratio);
-                        playerLife = lifeLeft;
+                        monster.attack(player);
 
-                        if(playerLife < 0){
-                            playerHP.setText(String.valueOf(0));
+                        if(player.getLife() < 0){
+                            //playerHP.setText(String.valueOf(0));
                         } else {
-                            playerHP.setText(String.valueOf(lifeLeft));
                             turn = 0;
                         }
                     }
@@ -220,6 +199,38 @@ public class AimingActivity extends Activity {
         };
         mCountDownTimer.start();
     }
+
+    private void setupTextData(Battle activeBattle) {
+        Player player = activeBattle.getPlayer();
+        Monster monster = activeBattle.getMonster();
+
+        setMonsterHP(monster.getLife());
+        setMonsterXP(monster.getExperience());
+
+        setPlayerHP(player.getLife());
+        setPlayerXP(player.getExperience());
+    }
+
+    private void setMonsterHP(int hp) {
+        setTextView(R.id.monsterHP2, hp);
+    }
+    private void setMonsterXP(int xp) {
+        setTextView(R.id.monsterXP2, xp);
+    }
+    private void setPlayerHP(int hp) {
+        setTextView(R.id.playerHP2, hp);
+    }
+    private void setPlayerXP(int xp) {
+        setTextView(R.id.playerXP2, xp);
+    }
+    private void setTextView(int id, int value) {
+        TextView textView = (TextView) findViewById(id);
+        if (textView != null) {
+            textView.setText("" + value);
+        }
+    }
+
+
 
     //For state flow see http://developer.android.com/reference/android/app/Activity.html
     @Override
