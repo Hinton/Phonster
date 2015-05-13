@@ -85,8 +85,13 @@ public class AimingActivity extends Activity {
         display.getSize(displaySize);
 
         // Create variables for aim position and speed
-        mAimPos.x = displaySize.x / 2;
-        mAimPos.y = displaySize.y / 2 + 650;
+        //mAimPos.x = displaySize.x / 2;
+        //mAimPos.y = displaySize.y / 2 + 650;
+
+        double randDeg = Math.random() * 360 + 1;
+        mAimPos.x = 600 * (float)Math.cos(Math.toRadians(randDeg)) + displaySize.x / 2;
+        mAimPos.y = 600 * (float)Math.sin(Math.toRadians(randDeg)) + displaySize.y / 2;
+
         mAimSpd.x = 0;
         mAimSpd.y = 0;
 
