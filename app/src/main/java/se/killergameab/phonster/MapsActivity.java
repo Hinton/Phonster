@@ -106,16 +106,22 @@ public class MapsActivity extends FragmentActivity {
             public void onFinish() {
                 //mTextField.setText("done!");
 
-                Location myLocation = gMap.getMyLocation();
-                //System.out.println(myLocation.getLatitude() + " " + myLocation.getLongitude());
-                Zone z = map.getCurrentZone(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
 
+
+                Location myLocation = gMap.getMyLocation();
                 int id = -1;
-                if (z != null) {
-                    id = z.getZoneId();
+
+                if (myLocation != null) {
+                    //System.out.println(myLocation.getLatitude() + " " + myLocation.getLongitude());
+                    Zone z = map.getCurrentZone(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
+
+
+                    if (z != null) {
+                        id = z.getZoneId();
+                    }
                 }
 
-                Intent i = new Intent(getApplicationContext(), AimingActivity.class);
+                Intent i = new Intent(getApplicationContext(), BattleInstructions.class);
                 i.putExtra("zone", id);
                 startActivity(i);
                 

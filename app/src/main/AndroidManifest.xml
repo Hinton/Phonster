@@ -41,10 +41,6 @@
             android:label="@string/title_activity_maps" >
         </activity>
         <activity
-            android:name=".InstructionsActivity"
-            android:label="@string/title_activity_instructions" >
-        </activity>
-        <activity
             android:name=".HighscoresActivity"
             android:label="@string/title_activity_highscores" >
         </activity>
@@ -59,6 +55,14 @@
             android:name=".AttackActivity"
             android:label="@string/title_activity_attack"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".BattleInstructions"
+            android:label="@string/title_activity_battle_instructions" >
+        </activity>
+        <activity
+            android:name=".MapsInstructions"
+            android:label="@string/title_activity_maps_instructions" >
         </activity>
     </application>
 

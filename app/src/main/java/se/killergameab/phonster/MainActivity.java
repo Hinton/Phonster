@@ -63,12 +63,7 @@ public class MainActivity extends Activity {
     }
 
     public void onPlayClick(View view) {
-        Intent i = new Intent(getApplicationContext(), MapsActivity.class);
-        startActivity(i);
-    }
-
-    public void onInstructionsClick(View view) {
-        Intent i = new Intent(getApplicationContext(), InstructionsActivity.class);
+        Intent i = new Intent(getApplicationContext(), MapsInstructions.class);
         startActivity(i);
     }
 
