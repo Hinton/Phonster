@@ -48,3 +48,16 @@ Aleks skapade en alternativ siktesskärm med repeterande vibrationer.
 Vi diskuterade huruvida spelaren ska titta på skärmen eller inte när den siktar. Diskuterade även piltavlans storlek och
 hur vibbarna skulle göras för att få den mest naturliga upplevelsen och bra feedback.
 Hannas och Aleks versioner sammanfogades till en som ska diskuteras inom gruppen. 
+
+12-13/5
+Mycket utveckling, både funktionsmässigt och designmässigt. 
+Följade designval har gjorts under arbetets gång: 
+
+- Ändra indikatorn för siktet (sikte i stället för prick). 
+- Platsen för siktet är slumpmässig, högre svårighetsgrad. (Tips från annan grupp)
+- Instruktionerna visades först statiska innan varje aktivitet men efter handledarmötet insåg vi att detta gör att instruktionerna då inte kommer läsas så vi valde att i stället använda ’Toasts’ för att instruera användaren vad den ska göra. Få ord vilket gör det lätt för användaren att ta in. 
+- Mycket diskussion om hur instruktion för ”svingen” ska fungera då vi på mötet insåg att det inte sker intuitivt. Bästa förslaget är just nu en kort animering som visar en arm som svingar. Annat förslag har tidigare varit att man kör en tutorial i början där användaren får prova på spelet. 
+- Bra feedback på vibration i battle-scenen. 
+- Kartan med zoner verkar fungera bra. 
+- En del förslag på hur vi kan använda ljud som feedback för att indikera exempelvis att man träffat på ett monster eller att man tagit skada av monstret. 
+- Progress-baren verkar inte helt uppfattas av användaren. Ska man kanske använda ljud även här för att indikera att tiden tickar? 
