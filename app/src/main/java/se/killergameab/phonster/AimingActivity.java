@@ -137,40 +137,17 @@ public class AimingActivity extends Activity {
                 Monster monster = battle.getMonster();
 
                 //Battle
-                if (turn == 0 && player.getLife() > 0) {
+                if (player.getLife() > 0) {
                     //System.out.print();
-                        mCountDownTimer.onFinish();
+                    mCountDownTimer.onFinish();
 
-                        Intent i = new Intent(getApplicationContext(), AttackActivity.class);
+                    // Do an attack.
+                    battle.attack(getAccuracy(), getProgress());
 
-                        // Create bundle to pass accuracy integer to AttackActivity
-                        Bundle sendAccuracy = new Bundle();
-                        sendAccuracy.putInt("accuracy", getAccuracy());
-                        i.putExtras(sendAccuracy);
-
-                        monster.attack(getAccuracy(), getProgress());
-
-                        turn = 1;
-
-                        startActivity(i);
-                    }
-
-                    if(turn == 1 && monster.getLife() > 0) {
-
-                        switch (zone) {
-                            case 1: img.setImageResource(R.drawable.monster1_hit);
-                            case 2: img.setImageResource(R.drawable.monster2_hit);
-                            case 3: img.setImageResource(R.drawable.monster3_hit);
-                        }
-
-                        monster.attack(player);
-
-                        if(player.getLife() < 0){
-                            //playerHP.setText(String.valueOf(0));
-                        } else {
-                            turn = 0;
-                        }
-                    }
+                    // Change activity to Attack for attack motion
+                    Intent i = new Intent(getApplicationContext(), AttackActivity.class);
+                    startActivity(i);
+                }
                 }
             });
 
@@ -200,6 +177,7 @@ public class AimingActivity extends Activity {
         mCountDownTimer.start();
     }
 
+    // Setup the initial information
     private void setupTextData(Battle activeBattle) {
         Player player = activeBattle.getPlayer();
         Monster monster = activeBattle.getMonster();
