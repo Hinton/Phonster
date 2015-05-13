@@ -18,7 +18,6 @@ import android.hardware.SensorManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.SensorEventListener;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import se.killergameab.phonster.Battle.Battle;
@@ -49,7 +48,6 @@ public class AimingActivity extends Activity {
     private long startTime = 0;
     private int countDownTime = 7500;
 
-    ImageView img;
     int zone;
 
     @Override
@@ -93,7 +91,7 @@ public class AimingActivity extends Activity {
         mAimSpd.y = 0;
 
         // Create initial aim
-        mAimingView = new AimingView(this, mAimPos.x, mAimPos.y, 12);
+        mAimingView = new AimingView(this, mAimPos.x, mAimPos.y, 100);
 
         mainAimView.addView(mAimingView); //add aim to main screen
         mAimingView.invalidate(); //call onDraw in AimingView
