@@ -11,44 +11,79 @@
         android:layout_height="wrap_content"
         android:text="Play"
         android:id="@+id/playButton"
-        android:layout_alignParentTop="true"
+        android:onClick="onPlayClick"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onPlayClick" />
+        style="?android:attr/borderlessButtonStyle"
+        android:textSize="60sp"
+        android:textColor="#ff99ff00" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Instructions"
         android:id="@+id/instructionsButton"
+        android:onClick="onInstructionsClick"
         android:layout_below="@+id/playButton"
         android:layout_centerHorizontal="true"
-        android:onClick="onInstructionsClick"/>
+        style="?android:attr/borderlessButtonStyle"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:layout_marginTop="20dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Highscores"
         android:id="@+id/highscoresButton"
+        android:onClick="onHighscoresClick"
         android:layout_below="@+id/instructionsButton"
         android:layout_centerHorizontal="true"
-        android:onClick="onHighscoresClick"/>
+        style="?android:attr/borderlessButtonStyle"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:layout_marginTop="20dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Aiming"
         android:id="@+id/aimingButton"
-        android:layout_below="@+id/highscoresButton"
-        android:layout_centerHorizontal="true"
-        android:onClick="onAimingClick"/>
+        android:onClick="onAimingClick"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Attack"
         android:id="@+id/attackButton"
-        android:layout_below="@+id/aimingButton"
+        android:onClick="onAttackClick"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phonster"
+        android:id="@+id/mainTitle"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onAttackClick"/>
+        android:textSize="80sp"
+        android:layout_marginTop="50dp"
+        android:singleLine="true"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="An LTH Project for Advanced Interaction Design by Killer Game AB"
+        android:id="@+id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"
+        android:gravity="center" />
 
 </RelativeLayout>

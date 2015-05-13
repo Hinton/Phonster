@@ -1,15 +1,20 @@
 package se.killergameab.phonster;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.media.MediaPlayer;
+import android.widget.Button;
+import android.widget.TextView;
+
+import me.grantland.widget.AutofitHelper;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     MediaPlayer mp1;
 
@@ -19,6 +24,20 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         mp1 = MediaPlayer.create(this, R.raw.menusong);
         mp1.start();
+
+        TextView txtTitle = (TextView) findViewById(R.id.mainTitle);
+        Button btnPlay = (Button) findViewById(R.id.playButton);
+        Button btnInstructions = (Button) findViewById(R.id.instructionsButton);
+        Button btnHighscores = (Button) findViewById(R.id.highscoresButton);
+
+        Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
+        txtTitle.setTypeface(typeface1);
+        btnPlay.setTypeface(typeface1);
+        btnInstructions.setTypeface(typeface1);
+        btnHighscores.setTypeface(typeface1);
+
+        AutofitHelper.create(txtTitle);
+
     }
 
     @Override
