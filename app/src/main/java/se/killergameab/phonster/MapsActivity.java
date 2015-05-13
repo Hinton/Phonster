@@ -24,6 +24,7 @@ import se.killergameab.phonster.map.Zone;
 
 import android.media.MediaPlayer;
 import android.support.v4.app.NotificationCompat;
+import android.view.Gravity;
 import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity {
@@ -63,12 +64,24 @@ public class MapsActivity extends FragmentActivity {
 
         // Toast notifikation. Går bort efter 5 sekunder.
         Context context = getApplicationContext();
-        CharSequence text = "Walk around the map to find monsters";
         int duration = Toast.LENGTH_LONG;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        CharSequence zones = "The three zones indicate difficulty";
+        CharSequence store = "<-- That's the store";
+        CharSequence explore = "Explore the map to fight the monsters!";
 
+        Toast toast1 = Toast.makeText(context, zones, duration);
+        toast1.setGravity(Gravity.TOP | Gravity.CENTER, 0, 100);
+
+        Toast toast2 = Toast.makeText(context, store, duration);
+        toast2.setGravity(Gravity.TOP | Gravity.LEFT, 500, 465);
+
+        Toast toast3 = Toast.makeText(context, explore, duration);
+        toast3.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 250);
+
+        toast1.show();
+        toast2.show();
+        toast3.show();
     }
 
     @Override
@@ -134,7 +147,7 @@ public class MapsActivity extends FragmentActivity {
         GoogleMapPresenter googleMapPresenter = new GoogleMapPresenter(map);
         googleMapPresenter.setup(gMap);
 
-        new CountDownTimer(10000, 1000) {
+        new CountDownTimer(20000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);

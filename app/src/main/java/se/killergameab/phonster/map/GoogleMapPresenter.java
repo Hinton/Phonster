@@ -22,7 +22,7 @@ public class GoogleMapPresenter {
 
         setupZones(googleMap, map.getZones());
         setupShop(googleMap, map.getShopLocation());
-        setupMonsters(googleMap, map.getMonsters());
+        //setupMonsters(googleMap, map.getMonsters());
 
     }
 
