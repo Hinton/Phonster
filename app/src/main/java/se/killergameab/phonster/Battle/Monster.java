@@ -9,7 +9,7 @@ public class Monster {
     public Monster(int zone) {
 
         if (zone == -1) {
-            zone = 0;
+            zone = 2;
         }
 
         experience = zone * 10;

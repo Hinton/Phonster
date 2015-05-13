@@ -1,8 +1,13 @@
 package se.killergameab.phonster;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -18,6 +23,8 @@ import se.killergameab.phonster.map.Map;
 import se.killergameab.phonster.map.Zone;
 
 import android.media.MediaPlayer;
+import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -32,6 +39,36 @@ public class MapsActivity extends FragmentActivity {
         setUpMapIfNeeded();
         mp1 = MediaPlayer.create(this, R.raw.song1);
         mp1.start();
+
+        /*
+        // Heads-up notifikation som kommer ner uppifrån. Fungerar inte på API < 21
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.lightsaber)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+
+
+        Intent resultIntent = new Intent(this, MapsActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+
+        stackBuilder.addParentStack(MapsActivity.class);
+
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setFullScreenIntent(resultPendingIntent, true);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1, mBuilder.build());
+
+        */
+
+        // Toast notifikation. Går bort efter 5 sekunder.
+        Context context = getApplicationContext();
+        CharSequence text = "Walk around the map to find monsters";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
     }
 
     @Override

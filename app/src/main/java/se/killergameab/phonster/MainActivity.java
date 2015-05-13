@@ -27,13 +27,11 @@ public class MainActivity extends Activity {
 
         TextView txtTitle = (TextView) findViewById(R.id.mainTitle);
         Button btnPlay = (Button) findViewById(R.id.playButton);
-        Button btnInstructions = (Button) findViewById(R.id.instructionsButton);
         Button btnHighscores = (Button) findViewById(R.id.highscoresButton);
 
         Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
         txtTitle.setTypeface(typeface1);
         btnPlay.setTypeface(typeface1);
-        btnInstructions.setTypeface(typeface1);
         btnHighscores.setTypeface(typeface1);
 
         AutofitHelper.create(txtTitle);
@@ -63,7 +61,7 @@ public class MainActivity extends Activity {
     }
 
     public void onPlayClick(View view) {
-        Intent i = new Intent(getApplicationContext(), MapsInstructions.class);
+        Intent i = new Intent(getApplicationContext(), MapsActivity.class);
         startActivity(i);
     }
 
