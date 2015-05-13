@@ -46,11 +46,11 @@
         android:layout_marginLeft="124dp"/>
 
     <ImageView
-        android:id="@+id/monsterPic"
+        android:id="@+id/monster1"
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/angry_monster"
+        android:src="@drawable/monster1"
         android:layout_gravity="center"/>
 
     <TextView

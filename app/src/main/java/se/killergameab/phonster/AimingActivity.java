@@ -19,9 +19,12 @@ import android.hardware.SensorManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.SensorEventListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.os.CountDownTimer;
+
+import se.killergameab.phonster.map.Zone;
 
 public class AimingActivity extends Activity {
 
@@ -41,7 +44,6 @@ public class AimingActivity extends Activity {
 
     public AimField currentField = AimField.OUTSIDE;
 
-    Monster monster = new Monster();
     Player player = new Player();
     int turn = 0;
 
@@ -49,8 +51,24 @@ public class AimingActivity extends Activity {
     CountDownTimer mCountDownTimer;
     int time=0;
 
+    ImageView img;
+    int zone;
+    Monster monster;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        Intent i = getIntent();
+        zone = i.getIntExtra("zone", -1);
+
+        monster = new Monster(zone);
+        img = (ImageView) findViewById(R.id.none);
+
+        switch (zone) {
+            case 1: img.setImageResource(R.drawable.monster1);
+            case 2: img.setImageResource(R.drawable.monster2);
+            case 3: img.setImageResource(R.drawable.monster3);
+        }
 
         //set app to full screen and keep screen on
         getWindow().setFlags(0xFFFFFFFF,
@@ -131,7 +149,7 @@ public class AimingActivity extends Activity {
 
                 //Battle
                 if (turn == 0 && playerLife > 0) {
-                        //System.out.print();
+                    //System.out.print();
                         mCountDownTimer.onFinish();
 
                         Intent i = new Intent(getApplicationContext(), AttackActivity.class);
@@ -156,6 +174,13 @@ public class AimingActivity extends Activity {
                     }
 
                     if(turn == 1 && monsterLife > 0) {
+
+                        switch (zone) {
+                            case 1: img.setImageResource(R.drawable.monster1_hit);
+                            case 2: img.setImageResource(R.drawable.monster2_hit);
+                            case 3: img.setImageResource(R.drawable.monster3_hit);
+                        }
+
                         int ratio = monsterExperience / playerExperience * 15;
                         int lifeLeft = player.lifeLeft(ratio);
                         playerLife = lifeLeft;

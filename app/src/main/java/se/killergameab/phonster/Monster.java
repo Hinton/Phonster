@@ -1,10 +1,18 @@
 package se.killergameab.phonster;
 
-public class Monster {
-    private int life;
+import android.widget.ImageView;
 
-    public Monster() {
-        life = 100;
+public class Monster {
+    private int XP;
+    private int life = 100;
+
+    public Monster(int zone) {
+
+        if (zone == -1) {
+            zone = 0;
+        }
+
+        XP = zone * 10;
     }
 
     public int lifeLeft(int accuracy) {
@@ -12,4 +20,5 @@ public class Monster {
 
         return life;
     }
+
 }
