@@ -1,5 +1,6 @@
 package se.killergameab.phonster;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -17,7 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 // http://code.tutsplus.com/tutorials/using-the-accelerometer-on-android--mobile-22125
-public class AttackActivity extends ActionBarActivity implements SensorEventListener {
+public class AttackActivity extends Activity implements SensorEventListener {
+
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
     private long lastUpdate = 0;
@@ -91,15 +93,20 @@ public class AttackActivity extends ActionBarActivity implements SensorEventList
                 // What to do with the attack is put here
                 if (speed > ATTACK_THRESHOLD) {
 
-                    RelativeLayout rView = (RelativeLayout)findViewById(R.id.attack);
-
-                    myText = new TextView(this);
-                    myText.setText("Attack successful with accuracy: " + accuracy);
-
-                    rView.addView(myText);
-
                     v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     v.vibrate(70);
+
+                    Intent i = new Intent(getApplicationContext(), AimingActivity.class);
+                    startActivity(i);
+
+                    //RelativeLayout rView = (RelativeLayout)findViewById(R.id.attack);
+
+                    //myText = new TextView(this);
+                    //myText.setText("Attack successful with accuracy: " + accuracy);
+
+                    //rView.addView(myText);
+
+
                 }
 
                 last_x = x;
@@ -122,6 +129,11 @@ public class AttackActivity extends ActionBarActivity implements SensorEventList
     protected void onResume() {
         super.onResume();
         senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    // Disable back button
+    @Override
+    public void onBackPressed() {
     }
 
 }

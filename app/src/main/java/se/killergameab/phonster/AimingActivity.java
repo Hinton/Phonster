@@ -49,7 +49,7 @@ public class AimingActivity extends Activity {
 
     ProgressBar mProgressBar;
     CountDownTimer mCountDownTimer;
-    int time=0;
+    int time = 0;
 
     ImageView img;
     int zone;
@@ -57,6 +57,8 @@ public class AimingActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(0xFFFFFFFF,
+                LayoutParams.FLAG_FULLSCREEN | LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         Intent i = getIntent();
         zone = i.getIntExtra("zone", -1);
@@ -70,9 +72,7 @@ public class AimingActivity extends Activity {
             case 3: img.setImageResource(R.drawable.monster3);
         }
 
-        //set app to full screen and keep screen on
-        getWindow().setFlags(0xFFFFFFFF,
-                LayoutParams.FLAG_FULLSCREEN | LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 
         super.onCreate(savedInstanceState);
 
@@ -197,9 +197,9 @@ public class AimingActivity extends Activity {
 
         //Create progress bar
         //http://stackoverflow.com/questions/10241633/android-progressbar-countdown
-        mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
+        mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
         mProgressBar.setProgress(time);
-        mCountDownTimer=new CountDownTimer(5000,950) {
+        mCountDownTimer = new CountDownTimer(5000,950) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -298,7 +298,7 @@ public class AimingActivity extends Activity {
                     }});
             }}; // TimerTask
 
-        mTmr.schedule(mTsk,8,8); //start timer
+        mTmr.schedule(mTsk, 8, 8); //start timer
         super.onResume();
     }
 
@@ -306,8 +306,6 @@ public class AimingActivity extends Activity {
     public void onDestroy() //main thread stopped
     {
         super.onDestroy();
-        //wait for threads to exit before clearing app
-        System.runFinalizersOnExit(true);
         v.cancel();
     }
 
@@ -353,6 +351,12 @@ public class AimingActivity extends Activity {
     public boolean isInField(int radius, float x, float y){
         return Math.pow((x - displaySize.x / 2), 2) +
                 Math.pow((y - displaySize.y / 2), 2) < Math.pow(radius, 2);
+
+    }
+
+    // Disable back button
+    @Override
+    public void onBackPressed() {
 
     }
 }
