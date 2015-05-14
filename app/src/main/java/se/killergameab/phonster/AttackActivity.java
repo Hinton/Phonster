@@ -96,15 +96,6 @@ public class AttackActivity extends Activity implements SensorEventListener {
 
                     Intent i = new Intent(getApplicationContext(), AimingActivity.class);
                     startActivity(i);
-
-                    //RelativeLayout rView = (RelativeLayout)findViewById(R.id.attack);
-
-                    //myText = new TextView(this);
-                    //myText.setText("Attack successful with accuracy: " + accuracy);
-
-                    //rView.addView(myText);
-
-
                 }
 
                 last_x = x;
