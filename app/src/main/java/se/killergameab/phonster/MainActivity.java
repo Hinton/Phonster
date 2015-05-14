@@ -16,14 +16,16 @@ import me.grantland.widget.AutofitHelper;
 
 public class MainActivity extends Activity {
 
-    MediaPlayer mp1;
+    MediaPlayer mp_menu_song, mp_button_sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mp1 = MediaPlayer.create(this, R.raw.menusong);
-        mp1.start();
+        mp_menu_song = MediaPlayer.create(this, R.raw.menusong);
+        mp_menu_song.start();
+
+        mp_button_sound = MediaPlayer.create(this, R.raw.menubutton);
 
         TextView txtTitle = (TextView) findViewById(R.id.mainTitle);
         Button btnPlay = (Button) findViewById(R.id.playButton);
@@ -35,7 +37,6 @@ public class MainActivity extends Activity {
         btnHighscores.setTypeface(typeface1);
 
         AutofitHelper.create(txtTitle);
-
     }
 
     @Override
@@ -61,21 +62,25 @@ public class MainActivity extends Activity {
     }
 
     public void onPlayClick(View view) {
+        mp_button_sound.start();
         Intent i = new Intent(getApplicationContext(), MapsActivity.class);
         startActivity(i);
     }
 
     public void onHighscoresClick(View view) {
+        mp_button_sound.start();
         Intent i = new Intent(getApplicationContext(), HighscoresActivity.class);
         startActivity(i);
     }
 
     public void onAimingClick(View view) {
+        mp_button_sound.start();
         Intent i = new Intent(getApplicationContext(), AimingActivity.class);
         startActivity(i);
     }
 
     public void onAttackClick(View view) {
+        mp_button_sound.start();
         Intent i = new Intent(getApplicationContext(), AttackActivity.class);
         startActivity(i);
     }
