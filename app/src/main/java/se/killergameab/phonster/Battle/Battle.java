@@ -7,8 +7,6 @@ public class Battle {
 
     private Player player;
     private Monster monster;
-    private int turn;
-
 
     public Battle(Player player, Monster monster) {
         this.player = player;

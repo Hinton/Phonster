@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
 public class CountDownBar extends ProgressBar {
+    CountDownTimer timer;
 
     public CountDownBar(Context context) {
         super(context);
@@ -21,9 +22,8 @@ public class CountDownBar extends ProgressBar {
 
     public void startCountdown(int maxTime) {
         this.setMax(maxTime);
-        System.out.println("HAI");
 
-        new CountDownTimer(maxTime, 1) {
+        timer = new CountDownTimer(maxTime, 1) {
 
             public void onTick(long millisUntilFinished) {
                 setProgress((int)millisUntilFinished);
@@ -35,10 +35,7 @@ public class CountDownBar extends ProgressBar {
         }.start();
 
     }
-
-
-
-
-
-
+    public void reset(){
+        timer.cancel();
+    }
 }

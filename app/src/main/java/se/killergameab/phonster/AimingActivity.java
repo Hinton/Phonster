@@ -22,12 +22,16 @@ import android.widget.TextView;
 
 import se.killergameab.phonster.Battle.Battle;
 import se.killergameab.phonster.Battle.Monster;
-import se.killergameab.phonster.Battle.MonsterCanvas;
 import se.killergameab.phonster.Battle.Player;
 
-public class AimingActivity extends Activity {
+public class AimingActivity extends Activity implements SensorEventListener {
+    SensorManager sensorManager;
+    Sensor sensor;
 
     public Game game;
+    Battle battle;
+    Player player;
+    Monster monster;
 
     AimingView mAimingView = null;
     Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
@@ -39,6 +43,8 @@ public class AimingActivity extends Activity {
     android.graphics.PointF mAimPos = new android.graphics.PointF(),
                             mAimSpd = new android.graphics.PointF();
     Vibrator v = null;
+
+    CountDownBar countDownBar;
 
     public enum AimField {
         FIRST, SECOND, THIRD, OUTSIDE
@@ -74,14 +80,8 @@ public class AimingActivity extends Activity {
         setupTextData(game.getActiveBattle());
 
         startTime = System.currentTimeMillis();
-
-        // Create the countdownBar
-        CountDownBar countDownBar = (CountDownBar) findViewById(R.id.progressbar);
+        countDownBar = (CountDownBar) findViewById(R.id.progressbar);
         countDownBar.startCountdown(countDownTime);
-
-        // Create the monsterView
-        MonsterCanvas monsterCanvas = (MonsterCanvas) findViewById(R.id.monster);
-        monsterCanvas.init();
 
         // Create pointer to main screen
         final FrameLayout mainAimView = (android.widget.FrameLayout) findViewById(R.id.main_aiming);
@@ -113,25 +113,13 @@ public class AimingActivity extends Activity {
         // Get instance of Vibrator from current Context
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        //listener for accelerometer, use anonymous class for simplicity
-        ((SensorManager) getSystemService(Context.SENSOR_SERVICE)).registerListener(
-                new SensorEventListener() {
-                    @Override
-                    public void onSensorChanged(SensorEvent event) {
-                        //set aim speed based on phone tilt (ignore Z axis)
-                        mAimSpd.x = -event.values[0];
-                        mAimSpd.y = event.values[1];
-                        //timer event will redraw aim
-                    }
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
 
-                    @Override
-                    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                    } //ignore
-                },
-                ((SensorManager) getSystemService(Context.SENSOR_SERVICE))
-                        .getSensorList(Sensor.TYPE_ACCELEROMETER).get(0),
-                SensorManager.SENSOR_DELAY_NORMAL);
-
+        battle = game.getActiveBattle();
+        player = battle.getPlayer();
+        monster = battle.getMonster();
 
         // Proceed to attack when user clicks the screen
         View screenView = findViewById(R.id.touchListener);
@@ -139,22 +127,13 @@ public class AimingActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-
-                Battle battle = game.getActiveBattle();
-                Player player = battle.getPlayer();
-                Monster monster = battle.getMonster();
-
-                //Battle
-                if (player.getLife() > 0) {
-                    //System.out.print();
-
-                    // Do an attack.
-                    battle.attack(getAccuracy(), getProgress());
-
-                    // Change activity to Attack for attack motion
+                // Change activity to Attack for attack motion
+                if (player.getLife() > 0 && monster.getLife() > 0){
                     Intent i = new Intent(getApplicationContext(), AttackActivity.class);
                     startActivity(i);
+
                 }
+                battle();
             }
         });
 
@@ -191,8 +170,6 @@ public class AimingActivity extends Activity {
         }
     }
 
-
-
     //For state flow see http://developer.android.com/reference/android/app/Activity.html
     @Override
     public void onPause() { //app moved to background, stop background threads
@@ -206,14 +183,15 @@ public class AimingActivity extends Activity {
     @Override
     public void onResume() //app moved to foreground (also occurs at app startup)
     {
+        setupTextData(battle);
+
+        startTime = System.currentTimeMillis();
+        countDownBar.reset();
+        countDownBar.startCountdown(countDownTime);
         //create timer to move aim to new position
         mTmr = new Timer();
         mTsk = new TimerTask() {
             public void run() {
-                //if debugging with external device,
-                //  a cat log viewer will be needed on the device
-                android.util.Log.d(
-                        "Aiming","Timer Hit - " + mAimPos.x + ":" + mAimPos.y);
                 //move aim based on current speed
                 mAimPos.x += mAimSpd.x;
                 mAimPos.y += mAimSpd.y;
@@ -326,12 +304,40 @@ public class AimingActivity extends Activity {
     public boolean isInField(int radius, float x, float y){
         return Math.pow((x - displaySize.x / 2), 2) +
                 Math.pow((y - displaySize.y / 2), 2) < Math.pow(radius, 2);
-
     }
 
     // Disable back button
     @Override
     public void onBackPressed() {
+    }
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        //set aim speed based on phone tilt (ignore Z axis)
+        mAimSpd.x = -event.values[0];
+        mAimSpd.y = event.values[1];
+        //timer event will redraw aim
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    private void battle(){
+        if (player.getLife() > 0 && monster.getLife() > 0){
+            battle.attack(getAccuracy(), getProgress());
+        } else if (player.getLife() <= 0) {
+            game = null;
+
+            // Should not start new activity but don't know how to solve this right now
+            // Might be able to fix in calling activity (In this case MapsActivity)
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
+        } else { // Monster life < 0
+            // return to mapActivity. This works because added android:noHistory to
+            // battle_instructions.xml (it will not be on the activity stack),
+            // this is not needed if this activity is called by mapsActivity directly
+            finish();
+        }
     }
 }

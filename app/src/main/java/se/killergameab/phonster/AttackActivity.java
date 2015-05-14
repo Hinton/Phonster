@@ -94,8 +94,10 @@ public class AttackActivity extends Activity implements SensorEventListener {
                     v.vibrate(300);
                     hit.start();
 
-                    Intent i = new Intent(getApplicationContext(), AimingActivity.class);
-                    startActivity(i);
+
+                    finish(); // Return to calling activity (aimingActivity)
+                    //Intent i = new Intent(getApplicationContext(), AimingActivity.class);
+                    //startActivity(i);
                 }
 
                 last_x = x;

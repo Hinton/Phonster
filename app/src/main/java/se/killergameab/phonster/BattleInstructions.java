@@ -23,7 +23,6 @@ public class BattleInstructions extends Activity {
         TextView txtTitle = (TextView) findViewById(R.id.headerInstructionsText);
         Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
         txtTitle.setTypeface(typeface1);
-
     }
 
     @Override
@@ -51,5 +50,6 @@ public class BattleInstructions extends Activity {
     public void onGotItClick(View view) {
         Intent i = new Intent(getApplicationContext(), AimingActivity.class);
         startActivity(i);
+        finish(); // So that when AimingActivity calls finish() it will return to MapsActivity
     }
 }
