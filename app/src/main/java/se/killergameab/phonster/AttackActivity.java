@@ -7,14 +7,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Vibrator;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 // http://code.tutsplus.com/tutorials/using-the-accelerometer-on-android--mobile-22125
@@ -28,6 +25,7 @@ public class AttackActivity extends Activity implements SensorEventListener {
     private TextView myText = null;
     private int accuracy;
     Vibrator v = null;
+    private MediaPlayer swing, hit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +39,11 @@ public class AttackActivity extends Activity implements SensorEventListener {
             accuracy = 10;
         }
 
-
-
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+
+        hit = MediaPlayer.create(this, R.raw.hit);
     }
 
 
@@ -92,9 +90,9 @@ public class AttackActivity extends Activity implements SensorEventListener {
 
                 // What to do with the attack is put here
                 if (speed > ATTACK_THRESHOLD) {
-
                     v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                    v.vibrate(70);
+                    v.vibrate(300);
+                    hit.start();
 
                     Intent i = new Intent(getApplicationContext(), AimingActivity.class);
                     startActivity(i);
