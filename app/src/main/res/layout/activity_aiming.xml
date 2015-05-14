@@ -45,12 +45,11 @@
         android:layout_marginTop="65dp"
         android:layout_marginLeft="124dp"/>
 
-    <ImageView
-        android:id="@+id/monster1"
+    <se.killergameab.phonster.Battle.MonsterCanvas
+        android:id="@+id/monster"
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/monster1"
         android:layout_gravity="center"/>
 
     <TextView
@@ -93,10 +92,6 @@
 
 
     <!-- Invisible view used in the onClickListener -->
-    <View
-        android:id="@+id/touchListener"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
 
 
     <se.killergameab.phonster.CountDownBar
@@ -108,5 +103,11 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_header_relativelayout"
         />
+
+    <View
+        android:id="@+id/touchListener"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center" />
 
 </FrameLayout>

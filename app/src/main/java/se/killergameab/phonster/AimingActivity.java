@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import se.killergameab.phonster.Battle.Battle;
 import se.killergameab.phonster.Battle.Monster;
+import se.killergameab.phonster.Battle.MonsterCanvas;
 import se.killergameab.phonster.Battle.Player;
 
 public class AimingActivity extends Activity {
@@ -73,8 +74,14 @@ public class AimingActivity extends Activity {
         setupTextData(game.getActiveBattle());
 
         startTime = System.currentTimeMillis();
+
+        // Create the countdownBar
         CountDownBar countDownBar = (CountDownBar) findViewById(R.id.progressbar);
         countDownBar.startCountdown(countDownTime);
+
+        // Create the monsterView
+        MonsterCanvas monsterCanvas = (MonsterCanvas) findViewById(R.id.monster);
+        monsterCanvas.init();
 
         // Create pointer to main screen
         final FrameLayout mainAimView = (android.widget.FrameLayout) findViewById(R.id.main_aiming);
