@@ -37,6 +37,8 @@ public class MainActivity extends Activity {
         btnHighscores.setTypeface(typeface1);
 
         AutofitHelper.create(txtTitle);
+
+
     }
 
     @Override
