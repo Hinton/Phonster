@@ -2,6 +2,7 @@ package se.killergameab.phonster;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -22,9 +23,16 @@ import java.util.HashMap;
 
 public class HighscoresActivity extends ActionBarActivity {
 
+    MediaPlayer mp_menu_song;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //mp_menu_song = MediaPlayer.create(this, R.raw.mainmenusong);
+        //mp_menu_song.setLooping(true);
+        //mp_menu_song.start();
+
         setTitle("Highscores");
         setContentView(R.layout.activity_highscore_list);
         ListView view = (ListView) findViewById(R.id.list);

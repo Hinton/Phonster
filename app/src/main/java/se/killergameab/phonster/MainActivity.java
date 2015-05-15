@@ -24,7 +24,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         //mp_menu_song = MediaPlayer.create(this, R.raw.menusong);
         //mp_menu_song.start();
-
+        mp_menu_song = MediaPlayer.create(this, R.raw.mainmenusong);
+        mp_menu_song.setLooping(true);
+        mp_menu_song.start();
         mp_button_sound = MediaPlayer.create(this, R.raw.menubutton);
 
         TextView txtTitle = (TextView) findViewById(R.id.mainTitle);
@@ -65,7 +67,14 @@ public class MainActivity extends Activity {
 
     public void onPlayClick(View view) {
         mp_button_sound.start();
+        mp_menu_song.stop();
         Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+        startActivity(i);
+    }
+
+    public void onInstructionsClick(View view){
+        mp_button_sound.start();
+        Intent i = new Intent(getApplicationContext(), InstructionsActivity.class);
         startActivity(i);
     }
 
@@ -77,12 +86,14 @@ public class MainActivity extends Activity {
 
     public void onAimingClick(View view) {
         mp_button_sound.start();
+        mp_menu_song.stop();
         Intent i = new Intent(getApplicationContext(), AimingActivity.class);
         startActivity(i);
     }
 
     public void onAttackClick(View view) {
         mp_button_sound.start();
+        mp_menu_song.stop();
         Intent i = new Intent(getApplicationContext(), AttackActivity.class);
         startActivity(i);
     }

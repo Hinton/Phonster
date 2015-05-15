@@ -58,12 +58,16 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".BattleInstructions"
-            android:label="@string/title_activity_battle_instructions" >
+            android:name=".InstructionsActivity"
+            android:label="InstructionsActivity" >
         </activity>
         <activity
             android:name=".MapsInstructions"
             android:label="@string/title_activity_maps_instructions" >
+        </activity>
+        <activity
+            android:name=".BattleScreenActivity"
+            android:label="BattleScreenActivity" >
         </activity>
     </application>
 

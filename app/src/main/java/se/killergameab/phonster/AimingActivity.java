@@ -5,6 +5,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -54,7 +55,7 @@ public class AimingActivity extends Activity implements SensorEventListener {
 
     private long startTime = 0;
     private int countDownTime = 7500;
-
+    private MediaPlayer mp_battle_second;
     int zone;
 
     @Override
@@ -64,6 +65,10 @@ public class AimingActivity extends Activity implements SensorEventListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aiming);
+
+        mp_battle_second = MediaPlayer.create(this, R.raw.battlesecond);
+        mp_battle_second.setLooping(true);
+        mp_battle_second.start();
 
         game = Game.instance();
 
@@ -91,10 +96,6 @@ public class AimingActivity extends Activity implements SensorEventListener {
         displaySize = new Point();
         display.getSize(displaySize);
 
-        // Create variables for aim position and speed
-        //mAimPos.x = displaySize.x / 2;
-        //mAimPos.y = displaySize.y / 2 + 650;
-
         double randDeg = Math.random() * 360 + 1;
         mAimPos.x = 600 * (float)Math.cos(Math.toRadians(randDeg)) + displaySize.x / 2;
         mAimPos.y = 600 * (float)Math.sin(Math.toRadians(randDeg)) + displaySize.y / 2;
@@ -103,7 +104,7 @@ public class AimingActivity extends Activity implements SensorEventListener {
         mAimSpd.y = 0;
 
         // Create initial aim
-        mAimingView = new AimingView(this, mAimPos.x, mAimPos.y, 100);
+        mAimingView = new AimingView(this, mAimPos.x, mAimPos.y, 20);
 
         mainAimView.addView(mAimingView); //add aim to main screen
         mAimingView.invalidate(); //call onDraw in AimingView

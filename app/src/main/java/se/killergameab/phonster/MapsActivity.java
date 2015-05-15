@@ -1,13 +1,9 @@
 package se.killergameab.phonster;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -23,14 +19,13 @@ import se.killergameab.phonster.map.Map;
 import se.killergameab.phonster.map.Zone;
 
 import android.media.MediaPlayer;
-import android.support.v4.app.NotificationCompat;
 import android.view.Gravity;
 import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap gMap; // Might be null if Google Play services APK is not available.
-    public MediaPlayer mp1;
+    public MediaPlayer mp_map_song;
 
 
     @Override
@@ -38,8 +33,8 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
-        mp1 = MediaPlayer.create(this, R.raw.song1);
-        mp1.start();
+        mp_map_song = MediaPlayer.create(this, R.raw.mapsong);
+        mp_map_song.start();
 
         /*
         // Heads-up notifikation som kommer ner uppifrån. Fungerar inte på API < 21
@@ -170,8 +165,8 @@ public class MapsActivity extends FragmentActivity {
                         id = z.getZoneId();
                     }
                 }
-
-                Intent i = new Intent(getApplicationContext(), BattleInstructions.class);
+                mp_map_song.stop();
+                Intent i = new Intent(getApplicationContext(), BattleScreenActivity.class);
                 i.putExtra("zone", id);
                 startActivity(i);
                 

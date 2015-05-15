@@ -11,12 +11,11 @@
     locations. \n\n\nThe battlefield is divided into fields (different colors) with monsters in different experience levels.
     \n\n\nTravel the battlefield to find the monsters and destroy them!</string>
 
-    <string name="battleInstructionsText">Follow the vibrations and press anywhere on the
+    <string name="InstructionsText">Follow the vibrations and press anywhere on the
         screen when the intensity is so high that you almost drop the phone. \n\n\nGet a damage bonus by aiming fast (keep an
         eye on the progress bar in the top of the screen). \n\n\nTo perform the attack just swing your phone. </string>
     <string name="title_activity_attack">AttackActivity</string>
     <string name="title_activity_battle">BattleActivity</string>
-    <string name="title_activity_battle_instructions">BattleInstructions</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_maps_instructions">MapsInstructions</string>
