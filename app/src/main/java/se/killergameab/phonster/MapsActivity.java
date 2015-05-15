@@ -22,6 +22,8 @@ import android.media.MediaPlayer;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap gMap; // Might be null if Google Play services APK is not available.
@@ -35,27 +37,6 @@ public class MapsActivity extends FragmentActivity {
         setUpMapIfNeeded();
         mp_map_song = MediaPlayer.create(this, R.raw.mapsong);
         mp_map_song.start();
-
-        /*
-        // Heads-up notifikation som kommer ner uppifrån. Fungerar inte på API < 21
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.lightsaber)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
-
-
-        Intent resultIntent = new Intent(this, MapsActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-
-        stackBuilder.addParentStack(MapsActivity.class);
-
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setFullScreenIntent(resultPendingIntent, true);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1, mBuilder.build());
-
-        */
 
         // Toast notifikation. Går bort efter 5 sekunder.
         Context context = getApplicationContext();
@@ -142,7 +123,9 @@ public class MapsActivity extends FragmentActivity {
         GoogleMapPresenter googleMapPresenter = new GoogleMapPresenter(map);
         googleMapPresenter.setup(gMap);
 
-        new CountDownTimer(20000, 1000) {
+        Random r = new Random();
+        int timeUntilNextMonster = r.nextInt(40000 - 20000) + 20000;
+        new CountDownTimer(timeUntilNextMonster, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
@@ -174,4 +157,9 @@ public class MapsActivity extends FragmentActivity {
         }.start();
     }
     // Use http://www.birdtheme.org/useful/v3tool.html to get coordinates
+
+    // Disable back button
+    @Override
+    public void onBackPressed() {
+    }
 }
