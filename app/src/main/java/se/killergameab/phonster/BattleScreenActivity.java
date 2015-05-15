@@ -10,44 +10,52 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-public class BattleScreenActivity extends Activity{
+import java.util.Timer;
+import java.util.TimerTask;
 
-        // Animation
-        Animation animFadein;
-        Animation animBlink;
-        private MediaPlayer mp_battle_first;
+public class BattleScreenActivity extends Activity {
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_battle_screen);
+    // Animation
+    Animation animFadein;
+    Animation animBlink;
+    private MediaPlayer mp_battle_first;
 
-            mp_battle_first = MediaPlayer.create(this, R.raw.battlefirst);
-            mp_battle_first.start();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_battle_screen);
 
-            TextView txtTitle = (TextView) findViewById(R.id.battleScreenText);
-            Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
-            txtTitle.setTypeface(typeface1);
+        mp_battle_first = MediaPlayer.create(this, R.raw.battlefirst);
+        mp_battle_first.start();
 
-            // load the animation
-            animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
-                    R.anim.fade_in);
-            animBlink = AnimationUtils.loadAnimation(getApplicationContext(),
-                    R.anim.blink);
+        TextView txtTitle = (TextView) findViewById(R.id.battleButton);
+        Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
+        txtTitle.setTypeface(typeface1);
 
-            txtTitle.setVisibility(View.VISIBLE);
+        // load the animation
+        animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fade_in);
+        animBlink = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.blink);
 
-            // start the animation
-            txtTitle.startAnimation(animFadein);
-            txtTitle.startAnimation(animBlink);
+        txtTitle.setVisibility(View.VISIBLE);
 
-        }
+        // start the animation
+        txtTitle.startAnimation(animFadein);
+        txtTitle.startAnimation(animBlink);
 
-        public void onReadyClick(View view) {
-            mp_battle_first.stop();
-            Intent i = new Intent(getApplicationContext(), AimingActivity.class);
-            startActivity(i);
-            finish();
-        }
+        int timeout = 3000; // make the activity visible for 3 seconds
 
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                mp_battle_first.stop();
+                Intent i = new Intent(getApplicationContext(), AimingActivity.class);
+                startActivity(i);
+            }
+        }, timeout);
+
+    }
 }
