@@ -1,24 +1,19 @@
 package se.killergameab.phonster;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
-import me.grantland.widget.AutofitHelper;
 
-
-public class BattleInstructions extends Activity {
+public class InstructionsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_battle_instructions);
+        setContentView(R.layout.activity_instructions);
 
         TextView txtTitle = (TextView) findViewById(R.id.headerInstructionsText);
         Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
@@ -28,7 +23,7 @@ public class BattleInstructions extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_battle_instructions, menu);
+        getMenuInflater().inflate(R.menu.menu_instructions, menu);
         return true;
     }
 
@@ -45,11 +40,5 @@ public class BattleInstructions extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onGotItClick(View view) {
-        Intent i = new Intent(getApplicationContext(), AimingActivity.class);
-        startActivity(i);
-        finish(); // So that when AimingActivity calls finish() it will return to MapsActivity
     }
 }

@@ -329,15 +329,16 @@ public class AimingActivity extends Activity implements SensorEventListener {
             battle.attack(getAccuracy(), getProgress());
         } else if (player.getLife() <= 0) {
             game = null;
-
+            mp_battle_second.stop();
             // Should not start new activity but don't know how to solve this right now
             // Might be able to fix in calling activity (In this case MapsActivity)
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
         } else { // Monster life < 0
             // return to mapActivity. This works because added android:noHistory to
-            // battle_instructions.xml (it will not be on the activity stack),
+            // activity_instructions.xml (it will not be on the activity stack),
             // this is not needed if this activity is called by mapsActivity directly
+            mp_battle_second.stop();
             finish();
         }
     }
