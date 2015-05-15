@@ -29,7 +29,6 @@ public class MapsActivity extends FragmentActivity {
     private GoogleMap gMap; // Might be null if Google Play services APK is not available.
     public MediaPlayer mp_map_song;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,30 +37,33 @@ public class MapsActivity extends FragmentActivity {
         mp_map_song = MediaPlayer.create(this, R.raw.mapsong);
         mp_map_song.start();
 
-        // Toast notifikation. Går bort efter 5 sekunder.
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_LONG;
+            // Toast notifikation. Går bort efter 5 sekunder.
+            Context context = getApplicationContext();
+            int duration = Toast.LENGTH_LONG;
 
-        CharSequence zones = "The three zones indicate difficulty";
-        CharSequence store = "<-- That's the store";
-        CharSequence explore = "Explore the map to fight the monsters!";
+            CharSequence zones = "The three zones indicate difficulty";
+            CharSequence store = "<-- That's the store";
+            CharSequence explore = "Explore the map to fight the monsters!";
 
-        Toast toast1 = Toast.makeText(context, zones, duration);
-        toast1.setGravity(Gravity.TOP | Gravity.CENTER, 0, 100);
+            Toast toast1 = Toast.makeText(context, zones, duration);
+            toast1.setGravity(Gravity.TOP | Gravity.CENTER, 0, 100);
 
-        Toast toast2 = Toast.makeText(context, store, duration);
-        toast2.setGravity(Gravity.TOP | Gravity.LEFT, 500, 465);
+            Toast toast2 = Toast.makeText(context, store, duration);
+            toast2.setGravity(Gravity.TOP | Gravity.LEFT, 500, 465);
 
-        Toast toast3 = Toast.makeText(context, explore, duration);
-        toast3.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 250);
+            Toast toast3 = Toast.makeText(context, explore, duration);
+            toast3.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 250);
 
-        toast1.show();
-        toast2.show();
-        toast3.show();
+            toast1.show();
+            toast2.show();
+            toast3.show();
+
     }
 
     @Override
     protected void onResume() {
+        mp_map_song = MediaPlayer.create(this, R.raw.mapsong);
+        mp_map_song.start();
         super.onResume();
         setUpMapIfNeeded();
     }
@@ -124,7 +126,7 @@ public class MapsActivity extends FragmentActivity {
         googleMapPresenter.setup(gMap);
 
         Random r = new Random();
-        int timeUntilNextMonster = r.nextInt(40000 - 20000) + 20000;
+        int timeUntilNextMonster = r.nextInt(35000 - 20000) + 20000;
         new CountDownTimer(timeUntilNextMonster, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -133,8 +135,6 @@ public class MapsActivity extends FragmentActivity {
 
             public void onFinish() {
                 //mTextField.setText("done!");
-
-
 
                 Location myLocation = gMap.getMyLocation();
                 int id = -1;

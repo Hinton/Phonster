@@ -23,7 +23,7 @@ public class Battle {
     }
 
     public void attack(int accuracy, int progress) {
-        int playerAttack = accuracy + progress;
+        int playerAttack = accuracy * progress;
         int monsterAttack = monster.getExperience() / player.getExperience();
 
         player.takeDamage(monsterAttack);

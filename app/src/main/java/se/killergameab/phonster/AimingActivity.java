@@ -273,11 +273,11 @@ public class AimingActivity extends Activity implements SensorEventListener {
     public int getAccuracy() {
         int accuracy = 0;
         if (isInField(82, mAimPos.x, mAimPos.y)) {
-            accuracy = 40;
-        } else if (isInField(230, mAimPos.x, mAimPos.y)) {
             accuracy = 20;
-        } else if (isInField(493, mAimPos.x, mAimPos.y)) {
+        } else if (isInField(230, mAimPos.x, mAimPos.y)) {
             accuracy = 10;
+        } else if (isInField(493, mAimPos.x, mAimPos.y)) {
+            accuracy = 5;
         }
         return accuracy;
     }
@@ -287,16 +287,14 @@ public class AimingActivity extends Activity implements SensorEventListener {
         long elapsedTime = System.currentTimeMillis() - startTime;
         elapsedTime /= 1000;
 
-        int progress = 0;
+        int progress = 1;
+
         if (elapsedTime >= 0 && elapsedTime < 2) {
-            progress = 40;
+            progress = 3;
         } else if (elapsedTime >= 2 && elapsedTime < 3) {
-            progress = 30;
-        } else if (elapsedTime >= 3 && elapsedTime < 4) {
-            progress = 20;
-        } else if (elapsedTime >= 4 && elapsedTime < 5) {
-            progress = 10;
+            progress = 2;
         }
+
         return progress;
     }
 
@@ -324,22 +322,26 @@ public class AimingActivity extends Activity implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
-    private void battle(){
-        if (player.getLife() > 0 && monster.getLife() > 0){
+    private void battle() {
+
+        if (player.getLife() > 0 && monster.getLife() > 0) {
             battle.attack(getAccuracy(), getProgress());
-        } else if (player.getLife() <= 0) {
-            game = null;
-            mp_battle_second.stop();
-            // Should not start new activity but don't know how to solve this right now
-            // Might be able to fix in calling activity (In this case MapsActivity)
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(i);
-        } else { // Monster life < 0
-            // return to mapActivity. This works because added android:noHistory to
-            // activity_instructions.xml (it will not be on the activity stack),
-            // this is not needed if this activity is called by mapsActivity directly
-            mp_battle_second.stop();
-            finish();
+
+            if (monster.getLife() <= 0) {
+                setMonsterHP(0);
+                mp_battle_second.stop();
+                finish();
+
+            } else if (player.getLife() <= 0) {
+                setPlayerHP(0);
+                game = null;
+                mp_battle_second.stop();
+                // Should not start new activity but don't know how to solve this right now
+                // Might be able to fix in calling activity (In this case MapsActivity)
+                // This is a good enough solution I think, if player dies -> highscore screen
+                Intent i = new Intent(getApplicationContext(), HighscoresActivity.class);
+                startActivity(i);
+            }
         }
     }
 }

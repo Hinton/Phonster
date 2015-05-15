@@ -90,8 +90,8 @@ public class AttackActivity extends Activity implements SensorEventListener {
 
                 // What to do with the attack is put here
                 if (speed > ATTACK_THRESHOLD) {
-                    v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                    v.vibrate(300);
+                    //v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    //v.vibrate(300);
                     hit.start();
 
 
