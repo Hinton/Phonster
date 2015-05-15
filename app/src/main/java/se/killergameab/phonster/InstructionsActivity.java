@@ -5,7 +5,10 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
+
+import me.grantland.widget.AutofitHelper;
 
 
 public class InstructionsActivity extends Activity {
@@ -15,9 +18,43 @@ public class InstructionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructions);
 
-        TextView txtTitle = (TextView) findViewById(R.id.headerInstructionsText);
+        TextView txtHeader = (TextView) findViewById(R.id.headerInstructionsText);
+        TextView txtInstructions1 = (TextView) findViewById(R.id.instructionsText1);
+        TextView txtInstructions2 = (TextView) findViewById(R.id.instructionsText2);
+        TextView txtInstructions3 = (TextView) findViewById(R.id.instructionsText3);
+
         Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
-        txtTitle.setTypeface(typeface1);
+
+        txtHeader.setTypeface(typeface1);
+        txtInstructions1.setTypeface(typeface1);
+        txtInstructions2.setTypeface(typeface1);
+        txtInstructions3.setTypeface(typeface1);
+
+        AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
+        AlphaAnimation fadeIn2 = new AlphaAnimation(0.0f , 1.0f );
+        AlphaAnimation fadeIn3 = new AlphaAnimation(0.0f , 1.0f );
+        AlphaAnimation fadeIn4 = new AlphaAnimation(0.0f , 1.0f );
+
+
+        txtHeader.startAnimation(fadeIn);
+        txtInstructions1.startAnimation(fadeIn2);
+        txtInstructions2.startAnimation(fadeIn3);
+        txtInstructions3.startAnimation(fadeIn4);
+
+        fadeIn.setDuration(2000);
+        fadeIn.setFillAfter(true);
+        fadeIn2.setDuration(3200);
+        fadeIn2.setFillAfter(true);
+        fadeIn3.setDuration(3200);
+        fadeIn3.setFillAfter(true);
+        fadeIn4.setDuration(3200);
+        fadeIn4.setFillAfter(true);
+
+        fadeIn2.setStartOffset(1000 + fadeIn.getStartOffset());
+        fadeIn3.setStartOffset(1500 + fadeIn2.getStartOffset());
+        fadeIn4.setStartOffset(1500 + fadeIn3.getStartOffset());
+
+        AutofitHelper.create(txtHeader);
     }
 
     @Override

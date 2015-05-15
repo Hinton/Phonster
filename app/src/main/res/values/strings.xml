@@ -7,16 +7,13 @@
     <string name="title_activity_highscores">HighscoresActivity</string>
     <string name="title_activity_aiming">Aiming</string>
 
-    <string name="mapsInstructionsText">You will now be thrown into the battlefield filled with monsters placed on various
-    locations. \n\n\nThe battlefield is divided into fields (different colors) with monsters in different experience levels.
-    \n\n\nTravel the battlefield to find the monsters and destroy them!</string>
+    <string name="InstructionsText">Tilt your phone and follow the vibrations to hit the monster riiiight
+        on the sweet spot.
+        \n\n\nFast aiming -> Damage bonus!
+        \n\n\nTo perform the attack just swing your phone.</string>
 
-    <string name="InstructionsText">Follow the vibrations and press anywhere on the
-        screen when the intensity is so high that you almost drop the phone. \n\n\nGet a damage bonus by aiming fast (keep an
-        eye on the progress bar in the top of the screen). \n\n\nTo perform the attack just swing your phone. </string>
     <string name="title_activity_attack">AttackActivity</string>
     <string name="title_activity_battle">BattleActivity</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_maps_instructions">MapsInstructions</string>
 </resources>

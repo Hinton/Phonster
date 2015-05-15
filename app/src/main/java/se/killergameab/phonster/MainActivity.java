@@ -62,9 +62,9 @@ public class MainActivity extends Activity {
         fadeIn4.setDuration(4000);
         fadeIn4.setFillAfter(true);
 
-        fadeIn2.setStartOffset(2000 + fadeIn.getStartOffset());
-        fadeIn3.setStartOffset(1000 + fadeIn2.getStartOffset());
-        fadeIn4.setStartOffset(1000 + fadeIn3.getStartOffset());
+        fadeIn2.setStartOffset(1000 + fadeIn.getStartOffset());
+        fadeIn3.setStartOffset(500 + fadeIn2.getStartOffset());
+        fadeIn4.setStartOffset(500 + fadeIn3.getStartOffset());
 
         AutofitHelper.create(txtPhonster);
 
