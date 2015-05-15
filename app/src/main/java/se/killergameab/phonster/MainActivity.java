@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.media.MediaPlayer;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,17 +30,43 @@ public class MainActivity extends Activity {
         mp_menu_song.start();
         mp_button_sound = MediaPlayer.create(this, R.raw.menubutton);
 
-        TextView txtTitle = (TextView) findViewById(R.id.mainTitle);
+
+        TextView txtPhonster = (TextView) findViewById(R.id.mainTitle);
         Button btnPlay = (Button) findViewById(R.id.playButton);
+        Button btnInstructions = (Button) findViewById(R.id.instructionsButton);
         Button btnHighscores = (Button) findViewById(R.id.highscoresButton);
 
+        AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
+        AlphaAnimation fadeIn2 = new AlphaAnimation(0.0f , 1.0f );
+        AlphaAnimation fadeIn3 = new AlphaAnimation(0.0f , 1.0f );
+        AlphaAnimation fadeIn4 = new AlphaAnimation(0.0f , 1.0f );
+
         Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
-        txtTitle.setTypeface(typeface1);
+
+        txtPhonster.setTypeface(typeface1);
         btnPlay.setTypeface(typeface1);
         btnHighscores.setTypeface(typeface1);
+        btnInstructions.setTypeface(typeface1);
 
-        AutofitHelper.create(txtTitle);
+        txtPhonster.startAnimation(fadeIn);
+        btnPlay.startAnimation(fadeIn2);
+        btnInstructions.startAnimation(fadeIn3);
+        btnHighscores.startAnimation(fadeIn4);
 
+        fadeIn.setDuration(4000);
+        fadeIn.setFillAfter(true);
+        fadeIn2.setDuration(4000);
+        fadeIn2.setFillAfter(true);
+        fadeIn3.setDuration(4000);
+        fadeIn3.setFillAfter(true);
+        fadeIn4.setDuration(4000);
+        fadeIn4.setFillAfter(true);
+
+        fadeIn2.setStartOffset(2000 + fadeIn.getStartOffset());
+        fadeIn3.setStartOffset(1000 + fadeIn2.getStartOffset());
+        fadeIn4.setStartOffset(1000 + fadeIn3.getStartOffset());
+
+        AutofitHelper.create(txtPhonster);
 
     }
 

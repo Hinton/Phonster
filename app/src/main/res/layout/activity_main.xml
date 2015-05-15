@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         style="?android:attr/borderlessButtonStyle"
         android:textSize="60sp"
-        android:textColor="#ff99ff00" />
+        android:textColor="#c2579532" />
 
     <Button
         android:layout_width="wrap_content"
@@ -28,7 +28,9 @@
         android:layout_below="@+id/playButton"
         android:layout_centerHorizontal="true"
         style="?android:attr/borderlessButtonStyle"
-        android:textSize="@dimen/abc_text_size_large_material" />
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:textColor="#b200"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -40,7 +42,7 @@
         android:layout_centerHorizontal="true"
         style="?android:attr/borderlessButtonStyle"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:layout_marginTop="20dp" />
+        android:textColor="#b200"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -72,7 +74,7 @@
         android:textSize="80sp"
         android:layout_marginTop="50dp"
         android:singleLine="true"
-        android:textColor="@android:color/holo_red_dark" />
+        android:textColor="#c2579532"/>
 
     <TextView
         android:layout_width="wrap_content"
