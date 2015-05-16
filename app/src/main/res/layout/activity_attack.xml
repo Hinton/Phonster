@@ -5,6 +5,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:id="@+id/attack"
+    android:background="#ffffff"
     tools:context="se.killergameab.phonster.AttackActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Swing!"
+        android:id="@+id/textSwing"
+        android:textColor="#000000"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="170dp"
+        android:id="@+id/imageSwing"
+        android:src="@drawable/swing"
+        android:adjustViewBounds="false"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
