@@ -2,28 +2,24 @@ package se.killergameab.phonster;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
 
 
-public class HighscoresActivity extends ActionBarActivity {
+public class HighscoresActivity extends Activity {
 
     MediaPlayer mp_menu_song;
+    int exp = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +29,14 @@ public class HighscoresActivity extends ActionBarActivity {
         //mp_menu_song.setLooping(true);
         //mp_menu_song.start();
 
-        setTitle("Highscores");
+        // Get the score from the intent
+        Intent intent = getIntent();
+        String player_name = intent.getStringExtra(AddScoreActivity.EXTRA_MESSAGE);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            exp = extras.getInt("EXTRA_EXP");
+        }
+
         setContentView(R.layout.activity_highscore_list);
         ListView view = (ListView) findViewById(R.id.list);
 
@@ -41,9 +44,27 @@ public class HighscoresActivity extends ActionBarActivity {
         User johan = new User("Johan", 543);
         User baloo = new User("Baloo", 377);
         User hanna = new User("Hanna", 99);
+
         data.add(0,johan);
         data.add(1,baloo);
         data.add(2,hanna);
+
+        if(exp != -1) {
+            User player = new User(player_name, exp);
+            data.add(3, player);
+        }
+
+        //Sort list
+        Collections.sort(data, new Comparator<User>() {
+            @Override
+            public int compare(User z1, User z2) {
+                if (z1.score < z2.score)
+                    return 1;
+                if (z1.score > z2.score)
+                    return -1;
+                return 0;
+            }
+        });
 
         UserAdapter adapter = new UserAdapter(this, R.layout.highscore_list_item, data);
         view.setAdapter(adapter);

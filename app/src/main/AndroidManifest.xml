@@ -65,6 +65,10 @@
             android:name=".BattleScreenActivity"
             android:label="BattleScreenActivity" >
         </activity>
+        <activity
+            android:name=".AddScoreActivity"
+            android:label="AddScoreActivity" >
+        </activity>
     </application>
 
 </manifest>

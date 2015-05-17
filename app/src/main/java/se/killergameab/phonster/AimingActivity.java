@@ -339,7 +339,8 @@ public class AimingActivity extends Activity implements SensorEventListener {
                 // Should not start new activity but don't know how to solve this right now
                 // Might be able to fix in calling activity (In this case MapsActivity)
                 // This is a good enough solution I think, if player dies -> highscore screen
-                Intent i = new Intent(getApplicationContext(), HighscoresActivity.class);
+                Intent i = new Intent(getApplicationContext(), AddScoreActivity.class);
+                i.putExtra("EXTRA_EXP", player.getExperience());
                 startActivity(i);
             }
         }
