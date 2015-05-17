@@ -27,14 +27,17 @@ public class MonsterCanvas extends ImageView {
         super(context, attrs, defStyle);
     }
 
-    public void init() {
+    public void init(Monster monster) {
 
         final AnimationDrawable animationDrawable = new AnimationDrawable();
         animationDrawable.setOneShot(false);
 
+        int r1 = getResources().getIdentifier("m" + monster.getZone() + "_idle1", "drawable", getContext().getPackageName());
+        int r2 = getResources().getIdentifier("m" + monster.getZone() + "_idle2", "drawable", getContext().getPackageName());
+
         List<Bitmap> images = new ArrayList<>();
-        images.add(BitmapFactory.decodeResource(getResources(), R.drawable.m1_idle1));
-        images.add(BitmapFactory.decodeResource(getResources(), R.drawable.m1_idle2));
+        images.add(BitmapFactory.decodeResource(getResources(), r1));
+        images.add(BitmapFactory.decodeResource(getResources(), r2));
 
         int duration = 200;
 
@@ -43,7 +46,7 @@ public class MonsterCanvas extends ImageView {
             animationDrawable.addFrame(frame, duration);
         }
 
-        setBackground(animationDrawable);
+        setImageDrawable(animationDrawable);
 
         post(new Runnable() {
             public void run() {
