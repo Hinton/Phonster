@@ -69,6 +69,14 @@
             android:name=".AddScoreActivity"
             android:label="AddScoreActivity" >
         </activity>
+        <activity
+            android:name=".HighscoresActivityEnd"
+            android:label="HighscoresActivityEnd" >
+        </activity>
+        <activity
+            android:name=".WinningScreenActivity"
+            android:label="WinningScreenActivity" >
+        </activity>
     </application>
 
 </manifest>

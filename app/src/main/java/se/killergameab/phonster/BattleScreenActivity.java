@@ -19,6 +19,7 @@ public class BattleScreenActivity extends Activity {
     Animation animFadein;
     Animation animBlink;
     private MediaPlayer mp_battle_first;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class BattleScreenActivity extends Activity {
 
         int timeout = 3000; // make the activity visible for 3 seconds
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
 
             @Override
@@ -57,5 +58,18 @@ public class BattleScreenActivity extends Activity {
             }
         }, timeout);
 
+    }
+
+    /** Called when the user clicks the invisible button */
+    public void onReadyClick(View view) {
+        timer.cancel();
+        mp_battle_first.stop();
+        Intent i = new Intent(getApplicationContext(), AimingActivity.class);
+        startActivity(i);
+    }
+
+    // Disable back button
+    @Override
+    public void onBackPressed() {
     }
 }
