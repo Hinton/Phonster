@@ -3,6 +3,7 @@ package se.killergameab.phonster;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -20,14 +21,18 @@ import se.killergameab.phonster.map.Zone;
 
 import android.media.MediaPlayer;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Random;
 
-public class MapsActivity extends FragmentActivity {
+public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLocationChangeListener {
 
+    private Map map;
     private GoogleMap gMap; // Might be null if Google Play services APK is not available.
     public MediaPlayer mp_map_song;
+    private boolean shopVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,10 +125,12 @@ public class MapsActivity extends FragmentActivity {
             }
         });
 
-        final Map map = Map.createDemoMap();
+        map = Map.createDemoMap();
 
         GoogleMapPresenter googleMapPresenter = new GoogleMapPresenter(map);
         googleMapPresenter.setup(gMap);
+
+        gMap.setOnMyLocationChangeListener(this);
 
         Random r = new Random();
         int timeUntilNextMonster = r.nextInt(35000 - 20000) + 20000;
@@ -161,5 +168,29 @@ public class MapsActivity extends FragmentActivity {
     // Disable back button
     @Override
     public void onBackPressed() {
+    }
+
+    @Override
+    public void onMyLocationChange(Location location) {
+        Location shopLocation = new Location("");
+        shopLocation.setLatitude(map.getShopLocation().latitude);
+        shopLocation.setLongitude(map.getShopLocation().longitude);
+
+        System.out.println(location.distanceTo(shopLocation));
+
+        final int maxDistance = 100;
+
+        if (!shopVisible && location.distanceTo(shopLocation) <= maxDistance) {
+            Button shopButton = (Button) findViewById(R.id.shopButton);
+            shopButton.setVisibility(View.VISIBLE);
+        } else if (shopVisible && location.distanceTo(shopLocation) > maxDistance) {
+            Button shopButton = (Button) findViewById(R.id.shopButton);
+            shopButton.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void onShopClick(View view) {
+        Intent i = new Intent(getApplicationContext(), ShopActivity.class);
+        startActivity(i);
     }
 }

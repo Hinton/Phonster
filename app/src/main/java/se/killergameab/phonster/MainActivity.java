@@ -124,4 +124,9 @@ public class MainActivity extends Activity {
         Intent i = new Intent(getApplicationContext(), AttackActivity.class);
         startActivity(i);
     }
+
+    public void onShopClick(View view) {
+        Intent i = new Intent(getApplicationContext(), ShopActivity.class);
+        startActivity(i);
+    }
 }
