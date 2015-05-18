@@ -13,7 +13,6 @@ public class Battle {
         this.monster = monster;
     }
 
-
     public Player getPlayer() {
         return player;
     }

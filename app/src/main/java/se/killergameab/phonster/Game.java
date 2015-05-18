@@ -23,6 +23,7 @@ public class Game {
     private Player player;
     private Battle battle;
     private int zone = -1;
+    private int score = 0;
 
     public Game() {
         this.player = new Player();
@@ -37,6 +38,7 @@ public class Game {
     }
 
     public void newBattle(Monster monster) {
+        score++;
         battle = new Battle(player, monster);
     }
 
@@ -50,5 +52,9 @@ public class Game {
 
     public int getZone() {
         return zone;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

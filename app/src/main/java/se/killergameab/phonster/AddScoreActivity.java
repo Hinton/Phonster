@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class AddScoreActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "se.killergameab.phonster.MESSAGE";
-    int exp = -1;
+    int score;
     MediaPlayer mp_button_sound;
 
     @Override
@@ -20,9 +20,9 @@ public class AddScoreActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_score);
         Bundle getExp = getIntent().getExtras();
-        exp = getExp.getInt("EXTRA_EXP");
+        score = getExp.getInt("Score");
         TextView textView = (TextView) findViewById(R.id.playerScore);
-        textView.setText(Integer.toString(exp));
+        textView.setText(Integer.toString(score));
 
         mp_button_sound = MediaPlayer.create(this, R.raw.menubutton);
     }
@@ -34,7 +34,7 @@ public class AddScoreActivity extends Activity {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
-        intent.putExtra("EXTRA_EXP", exp);
+        intent.putExtra("EXTRA_EXP", score);
         startActivity(intent);
     }
 

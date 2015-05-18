@@ -183,7 +183,6 @@ public class AimingActivity extends Activity implements SensorEventListener {
     @Override
     public void onResume() //app moved to foreground (also occurs at app startup)
     {
-
         if (monster.getLife() <= 0) {
             game.endBattle();
             mp_battle_second.stop();
@@ -199,7 +198,7 @@ public class AimingActivity extends Activity implements SensorEventListener {
             // Might be able to fix in calling activity (In this case MapsActivity)
             // This is a good enough solution I think, if player dies -> highscore screen
             Intent i = new Intent(getApplicationContext(), AddScoreActivity.class);
-            i.putExtra("EXTRA_EXP", player.getExperience());
+            i.putExtra("Score", game.getScore()*100-100);
             startActivity(i);
         }
 

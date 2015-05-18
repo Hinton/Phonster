@@ -133,7 +133,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         gMap.setOnMyLocationChangeListener(this);
 
         Random r = new Random();
-        int timeUntilNextMonster = r.nextInt(35000 - 20000) + 20000;
+        int timeUntilNextMonster = r.nextInt(5000 - 2000) + 2000;
         new CountDownTimer(timeUntilNextMonster, 1000) {
 
             public void onTick(long millisUntilFinished) {
