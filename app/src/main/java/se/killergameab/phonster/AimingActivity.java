@@ -57,7 +57,6 @@ public class AimingActivity extends Activity implements SensorEventListener {
     private long startTime = 0;
     private int countDownTime = 7500;
     private MediaPlayer mp_battle_second, mp_death;
-    int zone;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -186,19 +185,22 @@ public class AimingActivity extends Activity implements SensorEventListener {
         if (monster.getLife() <= 0) {
             game.endBattle();
             mp_battle_second.stop();
+            mp_battle_second.release();
+            mp_death.release();
             Intent i = new Intent(getApplicationContext(), WinningScreenActivity.class);
             startActivity(i);
 
         } else if (player.getLife() <= 0) {
             setPlayerHP(100);
             game.endBattle();
+            player.setLife(100);
             mp_battle_second.stop();
             mp_death.start();
-            // Should not start new activity but don't know how to solve this right now
-            // Might be able to fix in calling activity (In this case MapsActivity)
-            // This is a good enough solution I think, if player dies -> highscore screen
+            mp_battle_second.release();
+            mp_death.release();
             Intent i = new Intent(getApplicationContext(), AddScoreActivity.class);
             i.putExtra("Score", game.getScore()*100-100);
+            game.setScore(0);
             startActivity(i);
         }
 

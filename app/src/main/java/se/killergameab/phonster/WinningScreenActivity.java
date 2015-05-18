@@ -30,6 +30,7 @@ public class WinningScreenActivity extends Activity {
             @Override
             public void run() {
                 mp_winning.stop();
+                mp_winning.release();
                 Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(i);
             }
@@ -40,6 +41,7 @@ public class WinningScreenActivity extends Activity {
     public void onReadyClick(View view) {
         timer.cancel();
         mp_winning.stop();
+        mp_winning.release();
         Intent i = new Intent(getApplicationContext(), MapsActivity.class);
         startActivity(i);
     }

@@ -160,6 +160,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
                 game.setZone(id);
 
                 mp_map_song.stop();
+                mp_map_song.release();
                 Intent i = new Intent(getApplicationContext(), BattleScreenActivity.class);
                 startActivity(i);
                 

@@ -20,4 +20,6 @@ public class Player {
     public int getExperience() {
         return experience;
     }
+
+    public void setLife(int nbrLives) { life = nbrLives; }
 }

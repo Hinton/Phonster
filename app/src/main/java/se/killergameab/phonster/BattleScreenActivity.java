@@ -53,6 +53,7 @@ public class BattleScreenActivity extends Activity {
             @Override
             public void run() {
                 mp_battle_first.stop();
+                mp_battle_first.release();
                 Intent i = new Intent(getApplicationContext(), AimingActivity.class);
                 startActivity(i);
             }
@@ -64,6 +65,7 @@ public class BattleScreenActivity extends Activity {
     public void onReadyClick(View view) {
         timer.cancel();
         mp_battle_first.stop();
+        mp_battle_first.release();
         Intent i = new Intent(getApplicationContext(), AimingActivity.class);
         startActivity(i);
     }

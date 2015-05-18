@@ -57,4 +57,8 @@ public class Game {
     public int getScore() {
         return score;
     }
+
+    public void setScore(int newScore) {
+        score = newScore;
+    }
 }

@@ -95,6 +95,7 @@ public class MainActivity extends Activity {
     public void onPlayClick(View view) {
         mp_button_sound.start();
         mp_menu_song.stop();
+        mp_menu_song.release();
         Intent i = new Intent(getApplicationContext(), MapsActivity.class);
         startActivity(i);
     }
@@ -108,25 +109,6 @@ public class MainActivity extends Activity {
     public void onHighscoresClick(View view) {
         mp_button_sound.start();
         Intent i = new Intent(getApplicationContext(), HighscoresActivity.class);
-        startActivity(i);
-    }
-
-    public void onAimingClick(View view) {
-        mp_button_sound.start();
-        mp_menu_song.stop();
-        Intent i = new Intent(getApplicationContext(), AimingActivity.class);
-        startActivity(i);
-    }
-
-    public void onAttackClick(View view) {
-        mp_button_sound.start();
-        mp_menu_song.stop();
-        Intent i = new Intent(getApplicationContext(), AttackActivity.class);
-        startActivity(i);
-    }
-
-    public void onShopClick(View view) {
-        Intent i = new Intent(getApplicationContext(), ShopActivity.class);
         startActivity(i);
     }
 }
