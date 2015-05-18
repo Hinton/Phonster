@@ -15,7 +15,7 @@ public class Monster {
 
         this.zone = zone;
 
-        experience = zone * 30;
+        experience = zone * 10;
     }
 
     public int getZone() {
