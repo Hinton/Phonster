@@ -191,6 +191,27 @@ public class AimingActivity extends Activity implements SensorEventListener {
     @Override
     public void onResume() //app moved to foreground (also occurs at app startup)
     {
+
+        if (monster.getLife() <= 0) {
+            setMonsterHP(0);
+            game.endBattle();
+            mp_battle_second.stop();
+            Intent i = new Intent(getApplicationContext(), WinningScreenActivity.class);
+            startActivity(i);
+
+        } else if (player.getLife() <= 0) {
+            setPlayerHP(0);
+            game.endBattle();
+            mp_battle_second.stop();
+            mp_death.start();
+            // Should not start new activity but don't know how to solve this right now
+            // Might be able to fix in calling activity (In this case MapsActivity)
+            // This is a good enough solution I think, if player dies -> highscore screen
+            Intent i = new Intent(getApplicationContext(), AddScoreActivity.class);
+            i.putExtra("EXTRA_EXP", player.getExperience());
+            startActivity(i);
+        }
+
         setupTextData(battle);
 
         startTime = System.currentTimeMillis();
@@ -333,25 +354,6 @@ public class AimingActivity extends Activity implements SensorEventListener {
 
         if (player.getLife() > 0 && monster.getLife() > 0) {
             battle.attack(getAccuracy(), getProgress());
-
-            if (monster.getLife() <= 0) {
-                setMonsterHP(0);
-                mp_battle_second.stop();
-                Intent i = new Intent(getApplicationContext(), WinningScreenActivity.class);
-                startActivity(i);
-
-            } else if (player.getLife() <= 0) {
-                setPlayerHP(0);
-                game.endBattle();
-                mp_battle_second.stop();
-                mp_death.start();
-                // Should not start new activity but don't know how to solve this right now
-                // Might be able to fix in calling activity (In this case MapsActivity)
-                // This is a good enough solution I think, if player dies -> highscore screen
-                Intent i = new Intent(getApplicationContext(), AddScoreActivity.class);
-                i.putExtra("EXTRA_EXP", player.getExperience());
-                startActivity(i);
-            }
         }
     }
 }
