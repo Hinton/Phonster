@@ -26,7 +26,10 @@ public class Battle {
         int playerAttack = accuracy * progress;
         int monsterAttack = monster.getExperience() / player.getExperience();
 
-        player.takeDamage(monsterAttack);
         monster.takeDamage(playerAttack);
+
+        if (monster.getLife() > 0) {
+            player.takeDamage(monsterAttack);
+        }
     }
 }
