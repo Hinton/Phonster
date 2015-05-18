@@ -178,7 +178,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
 
         System.out.println(location.distanceTo(shopLocation));
 
-        final int maxDistance = 100;
+        final int maxDistance = 20;
 
         if (!shopVisible && location.distanceTo(shopLocation) <= maxDistance) {
             Button shopButton = (Button) findViewById(R.id.shopButton);
