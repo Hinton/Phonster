@@ -38,4 +38,8 @@ public class Game {
     public void newBattle(Monster monster) {
         battle = new Battle(player, monster);
     }
+
+    public void endBattle() {
+        this.battle = null;
+    }
 }

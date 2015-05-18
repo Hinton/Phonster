@@ -342,7 +342,7 @@ public class AimingActivity extends Activity implements SensorEventListener {
 
             } else if (player.getLife() <= 0) {
                 setPlayerHP(0);
-                game = null;
+                game.endBattle();
                 mp_battle_second.stop();
                 mp_death.start();
                 // Should not start new activity but don't know how to solve this right now
