@@ -1,11 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@drawable/menubackground"
-    tools:context="se.killergameab.phonster.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="se.killergameab.phonster.MainActivity"
+    android:background="#ff000000">
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView"
+        android:src="@drawable/bg"
+        android:adjustViewBounds="false"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phonster"
+        android:id="@+id/mainTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="80sp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:singleLine="true"
+        android:textColor="#d2CA004B"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -17,7 +39,7 @@
         android:layout_centerHorizontal="true"
         style="?android:attr/borderlessButtonStyle"
         android:textSize="60sp"
-        android:textColor="#c2579532" />
+        android:textColor="#d20950A6" />
 
     <Button
         android:layout_width="wrap_content"
@@ -28,9 +50,9 @@
         android:layout_below="@+id/playButton"
         android:layout_centerHorizontal="true"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="58dp"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:textColor="#b200"/>
+        android:textColor="#d20950A6"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -42,7 +64,8 @@
         android:layout_centerHorizontal="true"
         style="?android:attr/borderlessButtonStyle"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:textColor="#b200"/>
+        android:textColor="#d20950A6"/>
+
 
     <Button
         android:layout_width="wrap_content"
@@ -75,29 +98,4 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Phonster"
-        android:id="@+id/mainTitle"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="80sp"
-        android:layout_marginTop="50dp"
-        android:singleLine="true"
-        android:textColor="#c2579532"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="An LTH Project for Advanced Interaction Design by Killer Game AB"
-        android:id="@+id/textView"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textAlignment="center"
-        android:gravity="center" />
-
 </RelativeLayout>

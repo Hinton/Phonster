@@ -22,37 +22,35 @@ public class InstructionsActivity extends Activity {
         TextView txtInstructions1 = (TextView) findViewById(R.id.instructionsText1);
         TextView txtInstructions2 = (TextView) findViewById(R.id.instructionsText2);
         TextView txtInstructions3 = (TextView) findViewById(R.id.instructionsText3);
+        TextView txtInstructions4 = (TextView) findViewById(R.id.instructionsText4);
+
 
         Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
 
         txtHeader.setTypeface(typeface1);
-        txtInstructions1.setTypeface(typeface1);
-        txtInstructions2.setTypeface(typeface1);
-        txtInstructions3.setTypeface(typeface1);
 
-        AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
         AlphaAnimation fadeIn2 = new AlphaAnimation(0.0f , 1.0f );
         AlphaAnimation fadeIn3 = new AlphaAnimation(0.0f , 1.0f );
         AlphaAnimation fadeIn4 = new AlphaAnimation(0.0f , 1.0f );
+        AlphaAnimation fadeIn5 = new AlphaAnimation(0.0f , 1.0f );
 
-
-        txtHeader.startAnimation(fadeIn);
         txtInstructions1.startAnimation(fadeIn2);
         txtInstructions2.startAnimation(fadeIn3);
         txtInstructions3.startAnimation(fadeIn4);
+        txtInstructions4.startAnimation(fadeIn5);
 
-        fadeIn.setDuration(2000);
-        fadeIn.setFillAfter(true);
         fadeIn2.setDuration(3200);
         fadeIn2.setFillAfter(true);
         fadeIn3.setDuration(3200);
         fadeIn3.setFillAfter(true);
         fadeIn4.setDuration(3200);
         fadeIn4.setFillAfter(true);
+        fadeIn5.setDuration(3200);
+        fadeIn5.setFillAfter(true);
 
-        fadeIn2.setStartOffset(1000 + fadeIn.getStartOffset());
-        fadeIn3.setStartOffset(1500 + fadeIn2.getStartOffset());
-        fadeIn4.setStartOffset(1500 + fadeIn3.getStartOffset());
+        fadeIn3.setStartOffset(1000 + fadeIn2.getStartOffset());
+        fadeIn4.setStartOffset(1000 + fadeIn3.getStartOffset());
+        fadeIn5.setStartOffset(1000 + fadeIn4.getStartOffset());
 
         AutofitHelper.create(txtHeader);
     }

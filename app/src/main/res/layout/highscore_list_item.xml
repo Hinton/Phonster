@@ -8,9 +8,11 @@
     android:transitionGroup="false">
 
     <ImageView
+        android:id="@+id/avatar"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginRight="6dip"
+        android:layout_marginLeft="20dp"
         android:src="@drawable/icon_user"
         android:scaleType="fitStart"
         android:paddingTop="6dp" />

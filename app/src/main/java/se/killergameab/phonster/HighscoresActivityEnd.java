@@ -3,6 +3,7 @@ package se.killergameab.phonster;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,15 +25,21 @@ public class HighscoresActivityEnd extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_highscore_list_end);
 
         mp_button_sound = MediaPlayer.create(this, R.raw.menubutton);
+
+        TextView txtHeader = (TextView) findViewById(R.id.headerHighscoresTextEnd);
+
+        Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
+
+        txtHeader.setTypeface(typeface1);
 
         // Get the score from the intent
         Intent intent = getIntent();
         String player_name = intent.getStringExtra(AddScoreActivity.EXTRA_MESSAGE);
         Bundle extras = getIntent().getExtras();
         int exp = extras.getInt("EXTRA_EXP");
-        setContentView(R.layout.activity_highscore_list_end);
 
         ListView view = (ListView) findViewById(R.id.list);
 

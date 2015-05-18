@@ -22,7 +22,7 @@ public class WinningScreenActivity extends Activity {
         mp_winning = MediaPlayer.create(this, R.raw.winning);
         mp_winning.start();
 
-        int timeout = 5000; // make the activity visible for 5 seconds
+        int timeout = 4000; // make the activity visible for 4 seconds
 
         timer = new Timer();
         timer.schedule(new TimerTask() {

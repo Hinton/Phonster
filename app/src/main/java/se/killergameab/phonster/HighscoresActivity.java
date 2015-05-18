@@ -2,10 +2,12 @@ package se.killergameab.phonster;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,14 +15,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import me.grantland.widget.AutofitHelper;
+
 
 public class HighscoresActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_highscore_list);
+
+        TextView txtHeader = (TextView) findViewById(R.id.headerHighscoresText);
+
+        Typeface typeface1 = Typeface.createFromAsset(getAssets(), "fonts/DoubleFeature20.ttf");
+
+        txtHeader.setTypeface(typeface1);
 
         ListView view = (ListView) findViewById(R.id.list);
 
