@@ -183,9 +183,11 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         if (!shopVisible && location.distanceTo(shopLocation) <= maxDistance) {
             Button shopButton = (Button) findViewById(R.id.shopButton);
             shopButton.setVisibility(View.VISIBLE);
+            shopVisible = true;
         } else if (shopVisible && location.distanceTo(shopLocation) > maxDistance) {
             Button shopButton = (Button) findViewById(R.id.shopButton);
             shopButton.setVisibility(View.INVISIBLE);
+            shopVisible = false;
         }
     }
 
