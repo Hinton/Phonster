@@ -100,10 +100,6 @@ public class AimingActivity extends Activity implements SensorEventListener {
         displaySize = new Point();
         display.getSize(displaySize);
 
-        double randDeg = Math.random() * 360 + 1;
-        mAimPos.x = 600 * (float)Math.cos(Math.toRadians(randDeg)) + displaySize.x / 2;
-        mAimPos.y = 600 * (float)Math.sin(Math.toRadians(randDeg)) + displaySize.y / 2;
-
         mAimSpd.x = 0;
         mAimSpd.y = 0;
 
@@ -212,6 +208,11 @@ public class AimingActivity extends Activity implements SensorEventListener {
         startTime = System.currentTimeMillis();
         countDownBar.reset();
         countDownBar.startCountdown(countDownTime);
+
+        double randDeg = Math.random() * 360 + 1;
+        mAimPos.x = 600 * (float)Math.cos(Math.toRadians(randDeg)) + displaySize.x / 2;
+        mAimPos.y = 600 * (float)Math.sin(Math.toRadians(randDeg)) + displaySize.y / 2;
+
         //create timer to move aim to new position
         mTmr = new Timer();
         mTsk = new TimerTask() {
