@@ -189,14 +189,13 @@ public class AimingActivity extends Activity implements SensorEventListener {
     {
 
         if (monster.getLife() <= 0) {
-            setMonsterHP(0);
             game.endBattle();
             mp_battle_second.stop();
             Intent i = new Intent(getApplicationContext(), WinningScreenActivity.class);
             startActivity(i);
 
         } else if (player.getLife() <= 0) {
-            setPlayerHP(0);
+            setPlayerHP(100);
             game.endBattle();
             mp_battle_second.stop();
             mp_death.start();
