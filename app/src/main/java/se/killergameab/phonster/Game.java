@@ -22,6 +22,7 @@ public class Game {
 
     private Player player;
     private Battle battle;
+    private int zone = -1;
 
     public Game() {
         this.player = new Player();
@@ -41,5 +42,13 @@ public class Game {
 
     public void endBattle() {
         this.battle = null;
+    }
+
+    public void setZone(int zone) {
+        this.zone = zone;
+    }
+
+    public int getZone() {
+        return zone;
     }
 }

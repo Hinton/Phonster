@@ -143,6 +143,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
             public void onFinish() {
                 //mTextField.setText("done!");
 
+                Game game = Game.instance();
+
                 Location myLocation = gMap.getMyLocation();
                 int id = -1;
 
@@ -155,9 +157,11 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
                         id = z.getZoneId();
                     }
                 }
+
+                game.setZone(id);
+
                 mp_map_song.stop();
                 Intent i = new Intent(getApplicationContext(), BattleScreenActivity.class);
-                i.putExtra("zone", id);
                 startActivity(i);
                 
             }

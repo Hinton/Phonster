@@ -76,11 +76,7 @@ public class AimingActivity extends Activity implements SensorEventListener {
 
         // Check if we need to create a new battle
         if (game.getActiveBattle() == null) {
-            // Get the data from the map.
-            Intent i = getIntent();
-            zone = i.getIntExtra("zone", -1);
-
-            Monster monster = new Monster(zone);
+            Monster monster = new Monster(game.getZone());
             game.newBattle(monster);
         }
 
