@@ -14,6 +14,7 @@ public class AddScoreActivity extends Activity {
     public final static String EXTRA_MESSAGE = "se.killergameab.phonster.MESSAGE";
     int score;
     MediaPlayer mp_button_sound;
+    MediaPlayer mp_death;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,8 @@ public class AddScoreActivity extends Activity {
         textView.setText(Integer.toString(score));
 
         mp_button_sound = MediaPlayer.create(this, R.raw.menubutton);
+        mp_death = MediaPlayer.create(this, R.raw.deathsound);
+        mp_death.start();
     }
 
     /** Called when the user clicks the Ok button */
@@ -35,6 +38,8 @@ public class AddScoreActivity extends Activity {
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         intent.putExtra("EXTRA_EXP", score);
+        mp_death.stop();
+        mp_death.release();
         startActivity(intent);
     }
 

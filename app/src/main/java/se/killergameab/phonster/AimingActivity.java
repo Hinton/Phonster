@@ -194,13 +194,11 @@ public class AimingActivity extends Activity implements SensorEventListener {
             setPlayerHP(100);
             game.endBattle();
             player.setLife(100);
-            mp_battle_second.stop();
-            mp_death.start();
-            mp_battle_second.release();
-            mp_death.release();
             Intent i = new Intent(getApplicationContext(), AddScoreActivity.class);
             i.putExtra("Score", game.getScore()*100-100);
             game.setScore(0);
+            mp_battle_second.stop();
+            mp_battle_second.release();
             startActivity(i);
         }
 
